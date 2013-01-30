@@ -15,8 +15,9 @@ var bandstatsChart = {
     chartType: '',
     allRegions: [],
     allGenres: [],
-    
-    defaultRegion: 'nyc',
+    limit: 20,
+ 
+    defaultRegion: 'NYC',
     defaultChartType: 'bandScore',
     defaultLimit: 20,
 
@@ -26,19 +27,18 @@ var bandstatsChart = {
 
     init: function(callback) {
         bandstatsChart.setRegion(bandstatsChart.defaultRegion); 
+        bandstatsChart.showSelectedRegion();
+        bandstatsChart.setChartType(bandstatsChart.defaultChartType);
         bandstatsChart.initialized = true;
         callback();
     },
 
     setChartType: function(chartType) {
-        /* available types are:
-         * lastFMListeners
-         * lastFMListenersIncr
-         * webBuzz
-         * bandIncrMyspaceProfileViews
-         * bandMyspaceProfileViews
-         */
         bandstatsChart.chartType = chartType;
+    },
+
+    setLimit: function(limit) {
+        bandstatsChart.defaultLimit = limit;
     },
 
     setRegion: function(region) {
@@ -64,8 +64,14 @@ var bandstatsChart = {
         $('#bsc-scene-select').empty();
         for (var r in results) {
             var region = results[r];
-            $('#bsc-scene-select').append('<option>' + region.regionName + '</option>');
+            $('#bsc-scene-select').append("<option value='" + region.regionName + "'>" + region.regionName + '</option>');
         }
+        bandstatsChart.showSelectedRegion();
+    },
+
+    showSelectedRegion: function() {
+        var region = bandstatsChart.regions;
+        $('#bsc-scene-select').val(region);
     },
 
     addGenre: function(genre) {
@@ -127,7 +133,11 @@ var bandstatsChart = {
         }
         
         if (!params['limit']) {
-            params['limit'] = bandstatsChart.defaultLimit;
+            params['limit'] = bandstatsChart.limit;
+        }
+
+        if (!params['orderBy']) {
+            params['orderBy'] = bandstatsChart.chartType;
         }
 
         bandstatsChart._send(url, params, 'jsonp', function(results) {
@@ -217,9 +227,13 @@ var bandstatsChart = {
 $(function(){
     /* event handlers */
     $('#bsc-scene-select').change(function() {
-        var params = [];
-        params['region'] = $(this).val();
-        bandstatsChart.getChart(params);
+        bandstatsChart.setRegion($(this).val());
+        bandstatsChart.getChart();
+    });
+
+    $('#bsc-orderby-select').change(function() {
+        bandstatsChart.setChartType($(this).val());
+        bandstatsChart.getChart();
     });
 
     $('.bsc-genre-link').live('click', function() {
