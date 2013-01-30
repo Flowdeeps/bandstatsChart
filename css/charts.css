@@ -4,6 +4,7 @@
 
 .citycharts section {
   width: 600px;
+  float: left;
   }
 
 /* genre */
@@ -30,7 +31,6 @@
   list-style: none;
   padding: 0;
   position: relative;
-  /* float: left; */
   }
   .chart > li {
     position: relative;
@@ -148,6 +148,21 @@
 .citycharts aside {
   margin: 0 0 0 620px;
   }
+  .citycharts aside ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    line-height: 32px;
+    text-indent: 10px;
+    }
+    .citycharts aside ul li {
+      }
+      .citycharts aside ul li:nth-of-type(odd) {
+        background: #ececec;
+        }
+      .citycharts aside ul li input[type=checkbox] {
+        margin: 0 10px 0 0;
+        }
 
 .band-list {
   background: #999;
