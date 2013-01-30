@@ -1,0 +1,166 @@
+.citycharts * {
+  font-size: 12px;
+  }
+
+.citycharts section {
+  width: 600px;
+  }
+
+/* genre */
+.genres {
+  }
+  .genres h3 {
+    display: inline;
+    }
+  .genres a {
+    color: #f0a36f;
+    }
+  .genres ul {
+    margin: 0;
+    padding: 0;
+    display: inline;
+    }
+    .genres ul li {
+      display: inline;
+      }
+
+/* chart */
+.chart {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+  position: relative;
+  }
+  .chart > li {
+    position: relative;
+    border-top: solid 1px #adadad;
+    line-height: 34px;
+    width: 50%;
+    }
+    .chart .alt {
+      position: absolute;
+      right: 0;
+      top: 0;
+      }
+      .chart .alt + .alt {
+        margin-top: 35px;
+        }
+        .chart .alt + .alt + .alt {
+          margin-top: 70px;
+          }
+          .chart .alt + .alt + .alt + .alt {
+            margin-top: 105px;
+            }
+            .chart .alt + .alt + .alt + .alt + .alt {
+              margin-top: 140px;
+              }
+              .chart .alt + .alt + .alt + .alt + .alt + .alt {
+                margin-top: 175px;
+                }
+                .chart .alt + .alt + .alt + .alt + .alt + .alt + .alt {
+                  margin-top: 210px;
+                  }
+                  .chart .alt + .alt + .alt + .alt + .alt + .alt + .alt + .alt {
+                    margin-top: 245px;
+                    }
+                    .chart .alt + .alt + .alt + .alt + .alt + .alt + .alt + .alt + .alt {
+                      margin-top: 280px;
+                      }
+                      .chart .alt + .alt + .alt + .alt + .alt + .alt + .alt + .alt + .alt + .alt {
+                        margin-top: 315px;
+                        }
+    .chart li h3{
+      margin: 0 0 0 5px;
+      display: inline;
+      }
+      .chart li h3 span {
+        display: block;
+        float: left;
+        text-align: center;
+        width: 32px;
+        color: #fff;
+        font-size: 16px;
+        background: #f0a36f;
+        }
+    .chart li ul {
+      position: absolute;
+      right: 10px;
+      top: 0;
+      }
+      .chart li ul li{
+        list-style: none;
+        display: inline-block;
+        }
+      .chart .star,
+      .chart .facebook,
+      .chart .listen {
+        width: 17px;
+        overflow: hidden;
+        text-indent: -10000em
+        }
+      .chart .star {
+        width: 17px;
+        background: url(../images/img_icon_star_0.png) 0 center no-repeat transparent;
+        overflow: hidden;
+        text-indent: -10000em
+        }
+      /* in case you need a numeric for no rating */
+      .chart .star0 {
+        width: 17px;
+        background: url(../images/img_icon_star_0.png) 0 center no-repeat transparent;
+        overflow: hidden;
+        text-indent: -10000em
+        }
+      .chart .star1 {
+        width: 17px;
+        background: url(../images/img_icon_star_1.png) 0 center no-repeat transparent;
+        overflow: hidden;
+        text-indent: -10000em
+        }
+      .chart .star2 {
+        width: 17px;
+        background: url(../images/img_icon_star_2.png) 0 center no-repeat transparent;
+        overflow: hidden;
+        text-indent: -10000em
+        }
+      .chart .star3 {
+        width: 17px;
+        background: url(../images/img_icon_star_3.png) 0 center no-repeat transparent;
+        overflow: hidden;
+        text-indent: -10000em
+        }
+      .chart .star4 {
+        width: 17px;
+        background: url(../images/img_icon_star_4.png) 0 center no-repeat transparent;
+        overflow: hidden;
+        text-indent: -10000em
+        }
+      .chart .facebook {
+        background: url(../images/img_icon_fb.jpg) 0 center no-repeat transparent ;
+        width: 18px;
+        }
+      .chart .listen {
+        background: url(../images/img_icon_headphones.jpg) 0 center no-repeat transparent;
+        width: 19px;
+        }
+
+.band-list {
+  background: #999;
+  font-family: "georgia", "times new roman", serif;
+  display: block;
+  overflow: hidden;
+  }
+  .band-list fieldset {
+    border: none;
+    float: left;
+    }
+    .band-list label {
+      float: left;
+      }
+    .band-list select {
+      background: #333;
+      border: none;
+      border-radius: 3px;
+      font-size: 10px;
+      color: #fff;
+      }

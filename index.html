@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Band by region</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="css/normalize.css" type="text/css" />
+  <link rel="stylesheet" href="css/charts.css" type="text/css" />
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script type="text/javascript" src="js/charts.js"></script>
+
+</head>
+<body class="citycharts">
+  <div>
+    <form class="band-list">
+      <fieldset id="city">
+        <label>Scene</label>
+        <select id='bsc-scene-select'>
+        </select>
+      </fieldset>
+      <fieldset id="show">
+        <label>Show</label>
+        <select>
+          <option>All Artists</option>
+          <option>Some Artists</option>
+          <option>Other Artists</option>
+          <option>Dunno</option>
+        </select>
+      </fieldset>
+      <fieldset id="sort">
+        <label>Order by</label>
+        <select>
+          <option>Web Buzz</option>
+          <option>Popularity</option>
+          <option>Facebook Likes</option>
+          <option>Last.FM Fans</option>
+        </select>
+      </fieldset>
+    </form>
+    
+    <ul>
+      <li><a href="#" class="prev">Previous</a></li>
+      <li><a href="#" class="next">Next</a></li>
+    </ul>
+
+    <section>
+      <div class="genres">
+        <h3>Genre(s)</h3>
+        <ul id='bsc-genre-list'>
+        </ul>
+      </div>
+
+      <ol id="bsc-chart" class="chart">
+      </ol>
+    </section>
+
+    <aside>
+        <div>
+            <ul id='bsc-genre-select'>
+            </ul>
+        </div>
+    </aside>
+  </div>
+</body>
+
+<script type="text/javascript">
+    bandstatsChart.init(function() {
+
+        bandstatsChart.getAllRegions();
+        bandstatsChart.getAllGenres();
+        bandstatsChart.getChart('','','',20);
+    });
+</script>
+</html>
