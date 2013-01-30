@@ -30,6 +30,7 @@
   list-style: none;
   padding: 0;
   position: relative;
+  float: left;
   }
   .chart > li {
     position: relative;
@@ -143,6 +144,10 @@
         background: url(../images/img_icon_headphones.jpg) 0 center no-repeat transparent;
         width: 19px;
         }
+
+.citycharts aside {
+  margin: 0 0 0 620px;
+  }
 
 .band-list {
   background: #999;
