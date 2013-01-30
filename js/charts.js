@@ -165,7 +165,7 @@ var bandstatsChart = {
             output += result.bandName + "</h3>";
             output += "<ul><li class='star4'>Star</li>";
             output += "<li class='facebook'>Band Facebook Page</li>";
-            output += "<li class='listen'>Listen</li></ul></li>";
+            output += "<li class='listen' data-band-name='" + result.bandName + "'>Listen</li></ul></li>";
             
             $('#bsc-chart').append(output);
             score++;
@@ -243,5 +243,10 @@ $(function(){
             bandstatsChart.addGenre($(this).text());
         }
         bandstatsChart.getChart();
+    });
+
+    $('.listen').live('click', function() {
+        var url = "http://www.thedelimagazine.com/media_player/media_player.html?band_name=" + $(this).attr('data-band-name');
+        window.open(url, 'deliPlayer', 'width=270, height=800, menubar=no, location=no, titlebar=no');
     });
 });
