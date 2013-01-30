@@ -30,7 +30,7 @@
   list-style: none;
   padding: 0;
   position: relative;
-  float: left;
+  /* float: left; */
   }
   .chart > li {
     position: relative;
