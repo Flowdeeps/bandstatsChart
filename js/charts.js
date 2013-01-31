@@ -247,6 +247,6 @@ $(function(){
 
     $('.listen').live('click', function() {
         var url = "http://www.thedelimagazine.com/media_player/media_player.html?band_name=" + $(this).attr('data-band-name');
-        window.open(url, 'deliPlayer', 'width=270, height=800, menubar=no, location=no, titlebar=no');
+        window.open(url, 'deliPlayer', 'width=270,height=800,menubar=0,location=0,titlebar=0,toolbar=0,status=0,directories=0, ');
     });
 });

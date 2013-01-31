@@ -140,6 +140,9 @@
         background: url(../images/img_icon_fb.jpg) 0 center no-repeat transparent ;
         width: 18px;
         }
+      .chart .listen:hover {
+        cursor: pointer;
+        }
       .chart .listen {
         background: url(../images/img_icon_headphones.jpg) 0 center no-repeat transparent;
         width: 19px;
