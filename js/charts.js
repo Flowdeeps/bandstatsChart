@@ -21,6 +21,7 @@ var bandstatsChart = {
     defaultChartType: 'bandScore',
     defaultLimit: 20,
 
+    facebookId: '',
     cache: {},
     debug: true,
     initialized: false,
@@ -43,6 +44,10 @@ var bandstatsChart = {
 
     setRegion: function(region) {
         bandstatsChart.regions = [region];
+    },
+
+    setFacebookId: function(id) {
+        bandstatsChart.facebookId = id;
     },
 
     addRegion: function(region) {
@@ -163,7 +168,7 @@ var bandstatsChart = {
                 output += "<li class='alt'><h3><span>" + score + "</span>";
             }
             output += result.bandName + "</h3>";
-            output += "<ul><li class='star4'>Star</li>";
+            output += "<ul><li class='star4' data-band-id='" + result.bandId + "'>Star</li>";
             output += "<li class='facebook'>Band Facebook Page</li>";
             output += "<li class='listen' data-band-name='" + result.bandName + "'>Listen</li></ul></li>";
             
@@ -248,5 +253,21 @@ $(function(){
     $('.listen').live('click', function() {
         var url = "http://www.thedelimagazine.com/media_player/media_player.html?band_name=" + $(this).attr('data-band-name');
         window.open(url, 'deliPlayer', 'width=270,height=800,menubar=0,location=0,titlebar=0,toolbar=0,status=0,directories=0, ');
+    });
+
+    $('.star4').live('click', function() {
+        var bandId = $(this).attr('data-band-id');
+        var url = '../api/rating.php?bandId=' + bandId + '&rating=1';
+        $.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(errorObj, textStatus, errorMsg) {
+                console.log(url + ' -- ' + JSON.stringify(errorMsg));
+            }
+        });
     });
 });

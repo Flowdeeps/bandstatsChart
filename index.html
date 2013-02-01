@@ -22,9 +22,7 @@
         <label>Show</label>
         <select>
           <option>All Artists</option>
-          <option>Some Artists</option>
-          <option>Other Artists</option>
-          <option>Dunno</option>
+          <option>Stared Artists</option>
         </select>
       </fieldset>
       <fieldset id="sort">
@@ -36,12 +34,12 @@
           <option value= "lastFMListeners">Last.FM Fans</option>
         </select>
       </fieldset>
-    </form>
     
     <ul>
       <li><a href="#" class="prev">Previous</a></li>
       <li><a href="#" class="next">Next</a></li>
     </ul>
+    </form>
 
     <section>
       <div class="genres">
@@ -55,6 +53,9 @@
     </section>
 
     <aside>
+        <div>
+            <span id='bsc-login-status'><a id='bsc-login-btn' href='#'>login</a></span>
+        </div>
         <div>
             <ul id='bsc-genre-select'>
             </ul>
@@ -70,5 +71,64 @@
         bandstatsChart.getAllGenres();
         bandstatsChart.getChart('','','',20);
     });
+
+    // facebook stuff
+    window.fbAsyncInit = function() {
+        FB.init({
+            //appId      : '115928858587081',
+            appId      : '204182706372946',
+            channelUrl : '//www.thedelimagazine.com/bandstats/channel.html', 
+            status     : true,
+            cookie     : true, 
+            xfbml      : true 
+        });
+
+        // Additional init code here
+        FB.getLoginStatus(function(response) {
+            if (response.status === 'connected') {
+                // connected
+                FB.api('/me', function(response) {
+                    console.log(response);
+                    $('#bsc-login-status').html('hey, ' + response.name);
+                    bandstatsChart.setFacebookId(response.id);
+                });
+            } else if (response.status === 'not_authorized') {
+                // not_authorized
+                login();
+            } else {
+                // not_logged_in
+                login();
+            }
+        });
+    };
+
+    function login() {
+        FB.login(function(response) {
+            if (response.authResponse) {
+                // connected
+                FB.api('/me', function(response) {
+                    $('#bsc-login-status').html('hey, ' + response.name);
+                    bandstatsChart.setFacebookId(response.id);
+                });
+            } else {
+                // cancelled
+                console.log('error loggin in: '+response);
+            }
+        });
+    };
+
+    $('#bsc-login-btn').click(function() {
+        login();
+    });
+
+    // Load the Facebook SDK Asynchronously
+    (function(d){
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {return;}
+            js = d.createElement('script'); js.id = id; js.async = true;
+            js.src = "//connect.facebook.net/en_US/all.js";
+            ref.parentNode.insertBefore(js, ref);
+    }(document));
+    
 </script>
 </html>
