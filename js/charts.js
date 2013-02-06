@@ -15,11 +15,13 @@ var bandstatsChart = {
     chartType: '',
     allRegions: [],
     allGenres: [],
-    limit: 20,
+    chartResults: [],
+    limit: 400,
+    display: 20,
+    page: 1,
  
     defaultRegion: 'NYC',
     defaultChartType: 'bandScore',
-    defaultLimit: 20,
 
     facebookId: '',
     cache: {},
@@ -39,7 +41,7 @@ var bandstatsChart = {
     },
 
     setLimit: function(limit) {
-        bandstatsChart.defaultLimit = limit;
+        bandstatsChart.limi = limit;
     },
 
     setRegion: function(region) {
@@ -146,34 +148,66 @@ var bandstatsChart = {
         }
 
         bandstatsChart._send(url, params, 'jsonp', function(results) {
-            bandstatsChart.addChart(results);
+            bandstatsChart.chartResults = results;
+            bandstatsChart.displayChart(results);
             if (callback) {
                 callback(results);
             }
         });
     },
 
-    addChart: function(results) {
-        var score = 1;
-        var half = (results.length / 2);
+    displayChart: function(results) {
+        var score = 0;
+        var added = 0;
+        var half = (bandstatsChart.display / 2);
+        var start = (bandstatsChart.page-1) * bandstatsChart.display;
+        var end = (start + bandstatsChart.display);
 
+        if (!results) {
+            var results = bandstatsChart.chartResults;
+        }
+        alert(start + ' - ' + end);
         $('#bsc-chart').empty();
         for (var r in results) {
-            var result = results[r];
-            var output = '';
-           
-            if (score <= half) { 
-                output += "<li><h3><span>" + score + "</span>";
-            } else {
-                output += "<li class='alt'><h3><span>" + score + "</span>";
-            }
-            output += result.bandName + "</h3>";
-            output += "<ul><li class='star4' data-band-id='" + result.bandId + "'>Star</li>";
-            output += "<li class='facebook'>Band Facebook Page</li>";
-            output += "<li class='listen' data-band-name='" + result.bandName + "'>Listen</li></ul></li>";
-            
-            $('#bsc-chart').append(output);
             score++;
+            if (score >= (start+1) ) {
+                added++;
+                console.log('adding '+score);
+                var result = results[r];
+                var output = '';
+           
+                if (added <= half) { 
+                    output += "<li><h3><span>" + score + "</span>";
+                } else {
+                    output += "<li class='alt'><h3><span>" + score + "</span>";
+                }
+                output += result.bandName + "</h3>";
+                output += "<ul><li class='star4' data-band-id='" + result.bandId + "'>Star</li>";
+                output += "<li class='facebook'>Band Facebook Page</li>";
+                output += "<li class='listen' data-band-name='" + result.bandName + "'>Listen</li></ul></li>";
+                
+                $('#bsc-chart').append(output);
+            }
+            if (score === end) {
+                break;
+            }
+        }
+    },
+    
+    displayNextChart: function() {
+        var nextEnd = ((bandstatsChart.page+1) * bandstatsChart.display);
+        var total = bandstatsChart.chartResults.length;
+        var hasMore = ((nextEnd < bandstatsChart.limit) && (nextEnd < total)); 
+        if (hasMore) {
+            bandstatsChart.page++;
+            bandstatsChart.displayChart();
+        }
+    },
+    
+    displayPrevChart: function() {
+        if (bandstatsChart.page >= 2) {
+            bandstatsChart.page--;
+            bandstatsChart.displayChart();
         }
     },
 
@@ -270,4 +304,18 @@ $(function(){
             }
         });
     });
+
+    $('#bsc-prev').live('click', function() {
+        bandstatsChart.displayPrevChart();
+    });
+
+    $('#bsc-next').live('click', function() {
+        bandstatsChart.displayNextChart();
+    });
+
+    $('#bsc-limit-select').change(function() {
+        bandstatsChart.display = parseInt($(this).val());
+        bandstatsChart.displayChart();
+    });
+
 });
