@@ -182,7 +182,17 @@ var bandstatsChart = {
                     output += "<li class='alt'><h3><span>" + score + "</span>";
                 }
                 output += result.bandName + "</h3>";
-                output += "<ul><li class='star4' data-band-id='" + result.bandId + "'>Star</li>";
+                output += "<ul><li class='star4' data-band-id='" + result.bandId + "'>";
+                // slide out 5 star rating
+                output += "<div id='slideout'>";
+                output += "<img src='images/img_icon_star_2.png'>";
+                output += "<p>check this out</p>";
+                output += "<div id='slideout_inner'>";
+                output += "<p>here is stars</p>";
+                output += "</div>";
+                output += "</div>";
+
+                output += "</li>";
                 output += "<li class='facebook'>Band Facebook Page</li>";
                 output += "<li class='listen' data-band-name='" + result.bandName + "'>Listen</li></ul></li>";
                 
