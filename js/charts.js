@@ -184,13 +184,26 @@ var bandstatsChart = {
                 output += result.bandName + "</h3>";
                 output += "<ul><li class='star4' data-band-id='" + result.bandId + "'>";
                 // slide out 5 star rating
-                output += "<div id='slideout'>";
-                output += "<img src='images/img_icon_star_2.png'>";
-                output += "<p>check this out</p>";
-                output += "<div id='slideout_inner'>";
-                output += "<p>here is stars</p>";
+                //output += "<div id='slideout'>";
+                //output += "<img src='images/img_icon_star_2.png'>";
+                //output += "<div id='slideout_inner'>";
+
+                // 5 stars here
+                output += "<div class='band_rating'>";
+                output += "<div id='bsc-rating-" + results.bandId + "' class='rate_widget'>";
+                output += "<ul class='stars'>";
+                output += "<li class='star_1 ratings_stars'></li>";
+                output += "<li class='star_2 ratings_stars'></li>";
+                output += "<li class='star_3 ratings_stars'></li>";
+                output += "<li class='star_4 ratings_stars'></li>";
+                output += "<li class='star_5 ratings_stars'></li>";
+                output += "</ul>";
                 output += "</div>";
                 output += "</div>";
+
+                // slide out ends 
+                //output += "</div>";
+                //output += "</div>";
 
                 output += "</li>";
                 output += "<li class='facebook'>Band Facebook Page</li>";
