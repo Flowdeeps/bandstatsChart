@@ -399,7 +399,6 @@ $(function(){
         */ 
     });
 
-    
     function set_votes(widget) {
         if ($(widget).data('fsr')) {
             var avg = $(widget).data('fsr').whole_avg;
