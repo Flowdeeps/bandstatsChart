@@ -131,8 +131,8 @@
         text-indent: -10000em
         }
       .chart .star4 {
-        width: 177px;
-        /*background: url(../images/img_icon_star_4.png) 0 center no-repeat transparent; */
+        width: 17px;
+        background: url(../images/img_icon_star_4.png) 0 center no-repeat transparent;
         overflow: hidden;
         text-indent: -10000em
         }
@@ -188,75 +188,33 @@
       color: #fff;
       }
 
-/* slide out star rating */
+
 #slideout {
   position: absolute;
-  /*display: none;*/
-  left: 0;
+  width: 16px;
+  height: 16px;
+  top: 0;
   -webkit-transition-duration: 0.3s;
   -moz-transition-duration: 0.3s;
   -o-transition-duration: 0.3s;
   transition-duration: 0.3s;
-}
-#slideout_inner {
-  position: absolute;
-  /*display: none;*/
-  left: -250px;
-  -webkit-transition-duration: 0.3s;
-  -moz-transition-duration: 0.3s;
-  -o-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-}
-#slideout:hover {
-  left: 250px;
-  display: block;
-}
-#slideout:hover #slideout_inner {
-  left: 0;
-  display: block;
-}
-
-/* star rating styles */
-.band_rating {
-    border-bottom: 1px dashed #CCCCCC;
-    margin-bottom: 18px;
-    padding-bottom: 14px;
+  }
+  #slideout img {
+    position: absolute;
+    top: 8px;
+    left: 0;
     }
-    .rate_widget {
-        padding: 0;
-        display: inline-block;
+  #slideout:hover #slideout_inner {
+    width: 100px;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
     }
-    .stars {
-        padding: 0;
-        margin: 0 4px 0 0;
-        list-style-type: none;
-        display: inline-block;
-        }
-    .ratings_stars {
-        background: url('../images/star_empty.png') no-repeat;
-        display: inline-block;
-        height: 22px;
-        padding: 0;
-        width: 22px;
-        margin-right: 6px;
-        line-height: 22px;
-        }
-        .ratings_vote {background: url('../images/star_full.png') no-repeat;}
-        .ratings_over {background: url('../images/star_highlight.png') no-repeat;}
-
-    .total_votes, .rating_error, .rating_label {
-        padding: 0;
-        color: #666666;
-        display: inline-block;
-        line-height: 22px;
-        vertical-align: top;
-        margin-right: 8px;
-        margin-top: 2px;
-
-        }
-        .rating_error {
-            color: #b40032;
-            font-family: UnitSlabWeb-Bold, Georgia, "Times New Roman", Times, serif; font-weight:normal;
-            }
-
-
+  #slideout_inner {
+    width: 0;
+    position: absolute;
+    top: 8px;
+    background: red;
+    height: 16px;
+    }
