@@ -241,8 +241,12 @@
         margin-right: 4px;
         line-height: 16px;
         }
-        .ratings_vote {background: url('../images/img_icon_star_3.png') no-repeat;}
-        .ratings_over {background: url('../images/img_icon_star_4.png') no-repeat;}
+        .ratings_vote {
+          background: url('../images/img_icon_star_3.png') no-repeat;
+          }
+        .ratings_stars:hover {
+          background: url('../images/img_icon_star_4.png') no-repeat;
+          }
 
     .total_votes, .rating_error, .rating_label {
         padding: 0;
