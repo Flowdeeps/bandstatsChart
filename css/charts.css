@@ -244,7 +244,8 @@
         .ratings_vote {
           background: url('../images/img_icon_star_3.png') no-repeat;
           }
-        .ratings_stars:hover {
+        .ratings_stars:hover,
+        .ratings_stars.active {
           background: url('../images/img_icon_star_4.png') no-repeat;
           }
 
