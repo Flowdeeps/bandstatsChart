@@ -172,7 +172,6 @@ var bandstatsChart = {
             score++;
             if (score >= (start+1) ) {
                 added++;
-                console.log('adding '+score);
                 var result = results[r];
                 var output = '';
            
@@ -190,7 +189,7 @@ var bandstatsChart = {
 
                 // 5 stars here
                 output += "<div class='band_rating'>";
-                output += "<div id='bsc-rating-" + results.bandId + "' class='rate_widget'>";
+                output += "<div id='bsc-rating-" + result.bandId + "' class='rate_widget'>";
                 output += "<ul class='stars'>";
                 output += "<li class='star_1 ratings_stars'></li>";
                 output += "<li class='star_2 ratings_stars'></li>";
@@ -312,6 +311,7 @@ $(function(){
         window.open(url, 'deliPlayer', 'width=270,height=800,menubar=0,location=0,titlebar=0,toolbar=0,status=0,directories=0, ');
     });
 
+    /*
     $('.star4').live('click', function() {
         var bandId = $(this).attr('data-band-id');
         var url = '../api/rating.php?bandId=' + bandId + '&rating=1';
@@ -327,6 +327,7 @@ $(function(){
             }
         });
     });
+    */
 
     $('#bsc-prev').live('click', function() {
         bandstatsChart.displayPrevChart();

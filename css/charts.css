@@ -97,7 +97,7 @@
       .chart .listen {
         width: 17px;
         overflow: hidden;
-        text-indent: -10000em
+        text-indent: -10000em 
         }
       .chart .star {
         width: 17px;
@@ -134,7 +134,7 @@
         width: 177px;
         /*background: url(../images/img_icon_star_4.png) 0 center no-repeat transparent; */
         overflow: hidden;
-        text-indent: -10000em
+        /* text-indent: -10000em */
         }
       .chart .facebook {
         background: url(../images/img_icon_fb.jpg) 0 center no-repeat transparent ;
@@ -218,7 +218,6 @@
 
 /* star rating styles */
 .band_rating {
-    border-bottom: 1px dashed #CCCCCC;
     margin-bottom: 18px;
     padding-bottom: 14px;
     }
@@ -227,22 +226,23 @@
         display: inline-block;
     }
     .stars {
+        background-color: white;
         padding: 0;
         margin: 0 4px 0 0;
         list-style-type: none;
         display: inline-block;
         }
     .ratings_stars {
-        background: url('../images/star_empty.png') no-repeat;
+        background: url('../images/img_icon_star_0.png') no-repeat;
         display: inline-block;
-        height: 22px;
+        height: 16px;
         padding: 0;
-        width: 22px;
-        margin-right: 6px;
-        line-height: 22px;
+        width: 16px;
+        margin-right: 4px;
+        line-height: 16px;
         }
-        .ratings_vote {background: url('../images/star_full.png') no-repeat;}
-        .ratings_over {background: url('../images/star_highlight.png') no-repeat;}
+        .ratings_vote {background: url('../images/img_icon_star_3.png') no-repeat;}
+        .ratings_over {background: url('../images/img_icon_star_4.png') no-repeat;}
 
     .total_votes, .rating_error, .rating_label {
         padding: 0;
