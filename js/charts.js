@@ -166,7 +166,7 @@ var bandstatsChart = {
         if (!results) {
             var results = bandstatsChart.chartResults;
         }
-        alert(start + ' - ' + end);
+
         $('#bsc-chart').empty();
         for (var r in results) {
             score++;
