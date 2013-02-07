@@ -91,6 +91,7 @@
                     console.log(response);
                     $('#bsc-login-status').html('hey, ' + response.name);
                     bandstatsChart.setFacebookId(response.id);
+                    applyUserPrefs();
                 });
             } else if (response.status === 'not_authorized') {
                 // not_authorized
@@ -100,6 +101,28 @@
                 login();
             }
         });
+    };
+
+    function applyUserPrefs() {
+        $.ajax({
+            url: '../api/prefs.php',
+            type: 'get',
+            dataType: 'json',
+            success: function(response) {
+                console.log(response);
+                if (response['genre-list']) {
+                    var genrePrefs = response['genre-list'].split(',');
+                    for (var g in genrePrefs) {
+                        var genre = genrePrefs[g];
+                        bandstatsChart.addGenre(genre);
+                    } 
+                } 
+            },
+            error: function() {
+                console.log('could not get prefs');
+            }
+        }); 
+ 
     };
 
     function login() {

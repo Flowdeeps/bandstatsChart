@@ -80,14 +80,19 @@ var bandstatsChart = {
     },
 
     addGenre: function(genre) {
-        bandstatsChart.genres.push(genre);
-        bandstatsChart.showSelectedGenres();
+        var index = bandstatsChart.genres.indexOf(genre);
+        if (index < 0) {
+            bandstatsChart.genres.push(genre);
+            bandstatsChart.showSelectedGenres();
+            bandstatsChart.getChart();
+        }
     },
 
     removeGenre: function(genre) {
         var index = bandstatsChart.genres.indexOf(genre);
         bandstatsChart.genres.splice(index, 1);
         bandstatsChart.showSelectedGenres();
+        bandstatsChart.getChart();
     },
 
     showSelectedGenres: function() {
@@ -96,6 +101,7 @@ var bandstatsChart = {
             var genre = bandstatsChart.genres[g];
             var output = "<li><a href='#'>" + genre + "</a></li>";
             $('#bsc-genre-list').append(output);
+            $("input:checkbox[value='" + genre + "']").attr("checked", true);
         }
     },
 
@@ -114,9 +120,9 @@ var bandstatsChart = {
         $('#bsc-genre-select').empty();
         for (var g in results) {
             var genre = results[g];
-            var output = "<li class='bsc-genre-link'>";
+            var output = "<li>";
             
-            output += "<input type='checkbox' name='" + genre.genreName + "' value='" + genre.genreName + "' />";
+            output += "<input class='bsc-genre-link' type='checkbox' name='" + genre.genreName + "' value='" + genre.genreName + "' />";
             output += genre.genreName + "</li>";
             $('#bsc-genre-select').append(output);
         }
@@ -242,12 +248,30 @@ $(function(){
     });
 
     $('.bsc-genre-link').live('click', function() {
-        if (bandstatsChart.genres.indexOf($(this).text()) >= 0) {
-            bandstatsChart.removeGenre($(this).text());
+        if (bandstatsChart.genres.indexOf($(this).val()) >= 0) {
+            bandstatsChart.removeGenre($(this).val());
         } else {
-            bandstatsChart.addGenre($(this).text());
+            bandstatsChart.addGenre($(this).val());
+            var genreList = [];
+            $('.bsc-genre-link:checked').each(function() {
+                genreList.push($(this).val());
+            });
+            var genreListString = genreList.join(",");
+            // save the list to the server
+            var url = '../api/save_prefs.php?name=genre-list&value=' + genreListString; 
+            $.ajax({
+                url: url,
+                type: 'post',
+                dataType: 'json',      
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(errorObj, textStatus, errorMsg) {
+                    console.log(url + ' -- ' + JSON.stringify(errorMsg));
+                }
+            });
+                
         }
-        bandstatsChart.getChart();
     });
 
     $('.listen').live('click', function() {
@@ -257,7 +281,7 @@ $(function(){
 
     $('.star4').live('click', function() {
         var bandId = $(this).attr('data-band-id');
-        var url = '../api/rating.php?bandId=' + bandId + '&rating=1';
+        var url = '../api/save_rating.php?bandId=' + bandId + '&rating=1';
         $.ajax({
             url: url,
             type: 'post',
