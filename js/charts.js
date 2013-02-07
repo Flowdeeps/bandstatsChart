@@ -182,13 +182,10 @@ var bandstatsChart = {
                 }
                 output += result.bandName + "</h3>";
                 output += "<ul><li class='star4' data-band-id='" + result.bandId + "'>";
-                // slide out 5 star rating
-                //output += "<div id='slideout'>";
-                //output += "<div id='slideout_inner'>";
 
                 // 5 stars here
                 output += "<div class='band_rating'>";
-                output += "<div id='bsc-rating-" + result.bandId + "' class='rate_widget'>";
+                output += "<div data-band-id='" + result.bandId + "' class='rate_widget'>";
                 output += "<ul class='stars'>";
                 output += "<li class='star_1 ratings_stars'></li>";
                 output += "<li class='star_2 ratings_stars'></li>";
@@ -198,10 +195,6 @@ var bandstatsChart = {
                 output += "</ul>";
                 output += "</div>";
                 output += "</div>";
-
-                // slide out ends 
-                //output += "</div>";
-                //output += "</div>";
 
                 output += "</li>";
                 output += "<li class='facebook'>Band Facebook Page</li>";
@@ -341,11 +334,13 @@ $(function(){
         bandstatsChart.displayChart();
     });
 
-    // 5 star rating
+    /**
+     * 5 star rating functions
+     */
     $('.rate_widget').each(function(i) {
         var widget = this;
         var out_data = {
-            band_id : $(widget).attr('id')
+            band_id : $(widget).attr('data-band-id')
         };
         /*  
         $.post(
@@ -360,31 +355,36 @@ $(function(){
         */
     });
     
-    $('.ratings_stars').hover(
-        // Handles the mouseover
-        function() {
-            console.log('Im in');
-            $(this).prevAll().andSelf().addClass('active');
-            $(this).nextAll().removeClass('ratings_vote'); 
-        },
-        // Handles the mouseout
-        function() {
-            $(this).prevAll().andSelf().removeClass('active');
-            // can't use 'this' because it wont contain the updated data
-            set_votes($(this).closest('.rate_widget'));
+    $('.ratings_stars').live({ 
+        mouseenter:
+            function() {
+                console.log('Im in');
+                $(this).prevAll().andSelf().addClass('active');
+                $(this).nextAll().removeClass('ratings_vote'); 
+            },
+        mouseleave:
+            function() {
+                $(this).prevAll().andSelf().removeClass('active');
+                // can't use 'this' because it wont contain the updated data
+                set_votes($(this).closest('.rate_widget'));
+            }
         }
     );
 
     // This actually records the vote
-    $('.ratings_stars').bind('click', function() {
+    $('.ratings_stars').live('click', function() {
         var star = this;
         var widget = $(this).closest('.rate_widget');
         var score = $(star).attr('class').match(/star_(\d+)/)[1];
+        var band_id = widget.attr('data-band-id');
  
         var clicked_data = {
-            f_rating_score : score,
-            f_article_number : widget.attr('id')
+            rating_score : score,
+            band_id : band_id 
         };
+
+        alert(band_id + ' ' + score);
+
         /*
         $.post(
             '/rating/save',
