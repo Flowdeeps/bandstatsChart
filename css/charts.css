@@ -132,7 +132,7 @@
         }
       .chart .star4 {
         width: 40px;
-        /*background: url(../images/img_icon_star_0.png) 0 center no-repeat transparent; */
+        height: 35px;
         overflow: hidden;
         /* text-indent: -10000em */
         }
@@ -204,7 +204,7 @@
         list-style-type: none;
         display: inline-block;
         width: 19px;
-        height: 24px;
+        height: 29px;
         -webkit-transition-duration: 0.3s;
         -moz-transition-duration: 0.3s;
         -o-transition-duration: 0.3s;
