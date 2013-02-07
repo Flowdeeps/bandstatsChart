@@ -34,11 +34,18 @@
           <option value= "lastFMListeners">Last.FM Fans</option>
         </select>
       </fieldset>
-    
-    <ul>
-      <li><a href="#" class="prev">Previous</a></li>
-      <li><a href="#" class="next">Next</a></li>
-    </ul>
+    <!-- leaving out for now
+      <fieldset id="limit">
+        <label>Limit</label>
+        <select id="bsc-limit-select">
+          <option value="20">20</option>
+          <option value="40">40</option>
+          <option value="60">60</option>
+        </select>
+      </fieldset>
+    --> 
+      <button id="bsc-prev" class="prev">&lt;</button>
+      <button id="bsc-next" class="next">&gt;</button>
     </form>
 
     <section>
@@ -54,7 +61,7 @@
 
     <aside>
         <div>
-            <span id='bsc-login-status'><a id='bsc-login-btn' href='#'>login</a></span>
+            <h3 id='bsc-login-status'><a id='bsc-login-btn' href='#'>login</a></h3>
         </div>
         <div>
             <ul id='bsc-genre-select'>
@@ -152,6 +159,6 @@
             js.src = "//connect.facebook.net/en_US/all.js";
             ref.parentNode.insertBefore(js, ref);
     }(document));
-    
+   
 </script>
 </html>

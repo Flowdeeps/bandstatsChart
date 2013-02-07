@@ -97,7 +97,7 @@
       .chart .listen {
         width: 17px;
         overflow: hidden;
-        text-indent: -10000em
+        text-indent: -10000em 
         }
       .chart .star {
         width: 17px;
@@ -131,10 +131,10 @@
         text-indent: -10000em
         }
       .chart .star4 {
-        width: 17px;
-        background: url(../images/img_icon_star_4.png) 0 center no-repeat transparent;
+        width: 40px;
+        height: 35px;
         overflow: hidden;
-        text-indent: -10000em
+        /* text-indent: -10000em */
         }
       .chart .facebook {
         background: url(../images/img_icon_fb.jpg) 0 center no-repeat transparent ;
@@ -179,6 +179,7 @@
     }
     .band-list label {
       float: left;
+      margin-right: 10px;
       }
     .band-list select {
       background: #333;
@@ -187,3 +188,77 @@
       font-size: 10px;
       color: #fff;
       }
+
+.prev, .next {
+  background: #333;
+  border: none;
+  border-radius: 3px;
+  font-size: 10px;
+  color: #fff;
+  margin-top: 5px;
+}
+
+/* star rating styles */
+.band_rating {
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    }
+    .rate_widget {
+        padding: 0;
+        display: inline-block;
+    }
+    .stars {
+        background-color: white;
+        padding: 0;
+        margin: 3px 29px 0 0;
+        list-style-type: none;
+        display: inline-block;
+        overflow: hidden;
+        width: 19px;
+        height: 29px;
+        -webkit-transition-duration: 0.3s;
+        -moz-transition-duration: 0.3s;
+        -o-transition-duration: 0.3s;
+        transition-duration: 0.3s;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -o-border-radius: 5px;
+        }
+        .stars:hover {
+          margin: 3px -51px 0 0;
+          width: 100px;    
+          z-index: 10001;
+        }
+    .ratings_stars {
+        background: url('../images/img_icon_star_0.png') center no-repeat transparent;
+        display: inline-block;
+        height: 16px;
+        padding: 0;
+        width: 16px;
+        margin-right: 4px;
+        line-height: 16px;
+        }
+        .ratings_vote {
+          background: url('../images/img_icon_star_3.png') center no-repeat transparent;
+          }
+        .ratings_stars:hover,
+        .ratings_stars.active {
+          background: url('../images/img_icon_star_4.png') center no-repeat transparent;
+          }
+
+    .total_votes, .rating_error, .rating_label {
+        padding: 0;
+        color: #666666;
+        display: inline-block;
+        line-height: 22px;
+        vertical-align: top;
+        margin-right: 8px;
+        margin-top: 2px;
+
+        }
+        .rating_error {
+            color: #b40032;
+            font-family: UnitSlabWeb-Bold, Georgia, "Times New Roman", Times, serif; font-weight:normal;
+            }
+
+

@@ -15,11 +15,13 @@ var bandstatsChart = {
     chartType: '',
     allRegions: [],
     allGenres: [],
-    limit: 20,
+    chartResults: [],
+    limit: 400,
+    display: 20,
+    page: 1,
  
     defaultRegion: 'NYC',
     defaultChartType: 'bandScore',
-    defaultLimit: 20,
 
     facebookId: '',
     cache: {},
@@ -39,7 +41,7 @@ var bandstatsChart = {
     },
 
     setLimit: function(limit) {
-        bandstatsChart.defaultLimit = limit;
+        bandstatsChart.limi = limit;
     },
 
     setRegion: function(region) {
@@ -152,34 +154,80 @@ var bandstatsChart = {
         }
 
         bandstatsChart._send(url, params, 'jsonp', function(results) {
-            bandstatsChart.addChart(results);
+            bandstatsChart.chartResults = results;
+            bandstatsChart.displayChart(results);
             if (callback) {
                 callback(results);
             }
         });
     },
 
-    addChart: function(results) {
-        var score = 1;
-        var half = (results.length / 2);
+    displayChart: function(results) {
+        var score = 0;
+        var added = 0;
+        var half = (bandstatsChart.display / 2);
+        var start = (bandstatsChart.page-1) * bandstatsChart.display;
+        var end = (start + bandstatsChart.display);
+
+        if (!results) {
+            var results = bandstatsChart.chartResults;
+        }
 
         $('#bsc-chart').empty();
         for (var r in results) {
-            var result = results[r];
-            var output = '';
-           
-            if (score <= half) { 
-                output += "<li><h3><span>" + score + "</span>";
-            } else {
-                output += "<li class='alt'><h3><span>" + score + "</span>";
-            }
-            output += result.bandName + "</h3>";
-            output += "<ul><li class='star4' data-band-id='" + result.bandId + "'>Star</li>";
-            output += "<li class='facebook'>Band Facebook Page</li>";
-            output += "<li class='listen' data-band-name='" + result.bandName + "'>Listen</li></ul></li>";
-            
-            $('#bsc-chart').append(output);
             score++;
+            if (score >= (start+1) ) {
+                added++;
+                var result = results[r];
+                var output = '';
+           
+                if (added <= half) { 
+                    output += "<li><h3><span>" + score + "</span>";
+                } else {
+                    output += "<li class='alt'><h3><span>" + score + "</span>";
+                }
+                output += result.bandName + "</h3>";
+                output += "<ul><li class='star4' data-band-id='" + result.bandId + "'>";
+
+                // 5 stars here
+                output += "<div class='band_rating'>";
+                output += "<div data-band-id='" + result.bandId + "' class='rate_widget'>";
+                output += "<ul class='stars'>";
+                output += "<li class='star_1 ratings_stars'></li>";
+                output += "<li class='star_2 ratings_stars'></li>";
+                output += "<li class='star_3 ratings_stars'></li>";
+                output += "<li class='star_4 ratings_stars'></li>";
+                output += "<li class='star_5 ratings_stars'></li>";
+                output += "</ul>";
+                output += "</div>";
+                output += "</div>";
+
+                output += "</li>";
+                output += "<li class='facebook'>Band Facebook Page</li>";
+                output += "<li class='listen' data-band-name='" + result.bandName + "'>Listen</li></ul></li>";
+                
+                $('#bsc-chart').append(output);
+            }
+            if (score === end) {
+                break;
+            }
+        }
+    },
+    
+    displayNextChart: function() {
+        var nextEnd = ((bandstatsChart.page+1) * bandstatsChart.display);
+        var total = bandstatsChart.chartResults.length;
+        var hasMore = ((nextEnd < bandstatsChart.limit) && (nextEnd < total)); 
+        if (hasMore) {
+            bandstatsChart.page++;
+            bandstatsChart.displayChart();
+        }
+    },
+    
+    displayPrevChart: function() {
+        if (bandstatsChart.page >= 2) {
+            bandstatsChart.page--;
+            bandstatsChart.displayChart();
         }
     },
 
@@ -279,6 +327,7 @@ $(function(){
         window.open(url, 'deliPlayer', 'width=270,height=800,menubar=0,location=0,titlebar=0,toolbar=0,status=0,directories=0, ');
     });
 
+    /*
     $('.star4').live('click', function() {
         var bandId = $(this).attr('data-band-id');
         var url = '../api/save_rating.php?bandId=' + bandId + '&rating=1';
@@ -294,4 +343,94 @@ $(function(){
             }
         });
     });
+    */
+
+    $('#bsc-prev').live('click', function() {
+        bandstatsChart.displayPrevChart();
+    });
+
+    $('#bsc-next').live('click', function() {
+        bandstatsChart.displayNextChart();
+    });
+
+    $('#bsc-limit-select').change(function() {
+        bandstatsChart.display = parseInt($(this).val());
+        bandstatsChart.displayChart();
+    });
+
+    /**
+     * 5 star rating functions
+     */
+    $('.rate_widget').each(function(i) {
+        var widget = this;
+        var out_data = {
+            band_id : $(widget).attr('data-band-id')
+        };
+        /*  
+        $.post(
+            '/rating/show',
+            out_data,
+            function(INFO) {
+                $(widget).data( 'fsr', INFO );
+                set_votes(widget);
+            },
+            'json'
+        );
+        */
+    });
+    
+    $('.ratings_stars').live({ 
+        mouseenter:
+            function() {
+                console.log('Im in');
+                $(this).prevAll().andSelf().addClass('active');
+                $(this).nextAll().removeClass('ratings_vote'); 
+            },
+        mouseleave:
+            function() {
+                $(this).prevAll().andSelf().removeClass('active');
+                // can't use 'this' because it wont contain the updated data
+                set_votes($(this).closest('.rate_widget'));
+            }
+        }
+    );
+
+    // This actually records the vote
+    $('.ratings_stars').live('click', function() {
+        var star = this;
+        var widget = $(this).closest('.rate_widget');
+        var score = $(star).attr('class').match(/star_(\d+)/)[1];
+        var band_id = widget.attr('data-band-id');
+ 
+        var clicked_data = {
+            rating_score : score,
+            band_id : band_id 
+        };
+
+        alert(band_id + ' ' + score);
+
+        /*
+        $.post(
+            '/rating/save',
+            clicked_data,
+            function(INFO) {
+                widget.data( 'fsr', INFO );
+                set_votes(widget);
+            },
+            'json'
+        );
+        */ 
+    });
+
+    function set_votes(widget) {
+        if ($(widget).data('fsr')) {
+            var avg = $(widget).data('fsr').whole_avg;
+            var votes = $(widget).data('fsr').number_votes;
+            var exact = $(widget).data('fsr').dec_avg;
+            var error = $(widget).data('fsr').error;
+
+            $(widget).find('.star_' + avg).prevAll().andSelf().addClass('ratings_vote');
+            $(widget).find('.star_' + avg).nextAll().removeClass('ratings_vote'); 
+        }
+    }
 });
