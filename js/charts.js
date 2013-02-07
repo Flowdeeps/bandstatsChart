@@ -12,6 +12,7 @@ var bandstatsChart = {
     genres: [],
     regions: [], 
     bandNames: [],
+    bandIds: [],
     chartType: '',
     allRegions: [],
     allGenres: [],
@@ -47,6 +48,10 @@ var bandstatsChart = {
 
     setRegion: function(region) {
         bandstatsChart.regions = [region];
+    },
+
+    setBandIds: function(bandIds) {
+        bandstatsChart.bandIds = bandIds;
     },
 
     setUserRatings: function(ratings) {
@@ -148,6 +153,10 @@ var bandstatsChart = {
 
         if (!params['genre']) {
             params['genre'] = bandstatsChart.genres.join(',');
+        }
+
+        if (!params['bandId']) {
+            params['bandId'] = bandstatsChart.bandIds.join(',');
         }
         
         if (!params['limit']) {
@@ -324,7 +333,6 @@ var bandstatsChart = {
     },
     
     applyUserRatings: function() {
-        console.log(bandstatsChart.userRatings);
         var ratings = bandstatsChart.userRatings;
         for (var bandId in ratings) {
             for (var cr in bandstatsChart.chartResults) {
@@ -357,7 +365,7 @@ var bandstatsChart = {
             type: 'post',
             dataType: 'json',
             success: function(response) {
-                console.log(response);
+                bandstatsChart.log(response);
             },
             error: function(errorObj, textStatus, errorMsg) {
                 console.log(url + ' -- ' + JSON.stringify(errorMsg));
@@ -372,7 +380,7 @@ var bandstatsChart = {
             type: 'post',
             dataType: 'json',
             success: function(response) {
-                console.log(response);
+                bandstatsChart.log(response);
                 callback(response);
             },
             error: function(errorObj, textStatus, errorMsg) {
@@ -410,7 +418,7 @@ var bandstatsChart = {
                 if (response.status === 'connected') {
                     // connected
                     FB.api('/me', function(response) {
-                        console.log(response);
+                        bandstatsChart.log(response);
                         bandstatsChart.setFacebookId(response.id);
                         bandstatsChart.applyUserPrefs();
                     });
@@ -445,7 +453,7 @@ var bandstatsChart = {
                 });
             } else {
                 // cancelled
-                console.log('error loggin in: '+response);
+                bandstatsChart.log('error loggin in: '+response);
             }
         });
     },
@@ -468,6 +476,24 @@ $(function(){
     $('#bsc-orderby-select').change(function() {
         bandstatsChart.setChartType($(this).val());
         bandstatsChart.getChart();
+    });
+
+    $('#bsc-show-select').change(function() {
+        if (bandstatsChart.facebookId) {
+            if ($(this).val() === "starred") { 
+                var bandIds = [];
+                for (var bandId in bandstatsChart.userRatings) {
+                    bandIds.push(bandId);
+                }
+                bandstatsChart.setBandIds(bandIds);
+            } else {
+                bandstatsChart.setBandIds([]);
+            }
+            bandstatsChart.getChart();
+        } else {
+            // show facebook features
+            alert('login with facebook');
+        }
     });
 
     $('.bsc-genre-link').live('click', function() {
