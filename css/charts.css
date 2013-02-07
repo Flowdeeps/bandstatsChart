@@ -43,33 +43,33 @@
       right: 0;
       top: 0;
       }
-      .chart .alt + .alt {
+      .chart li:nth-child(12) {
         margin-top: 35px;
         }
-        .chart .alt + .alt + .alt {
-          margin-top: 70px;
-          }
-          .chart .alt + .alt + .alt + .alt {
-            margin-top: 105px;
-            }
-            .chart .alt + .alt + .alt + .alt + .alt {
-              margin-top: 140px;
-              }
-              .chart .alt + .alt + .alt + .alt + .alt + .alt {
-                margin-top: 175px;
-                }
-                .chart .alt + .alt + .alt + .alt + .alt + .alt + .alt {
-                  margin-top: 210px;
-                  }
-                  .chart .alt + .alt + .alt + .alt + .alt + .alt + .alt + .alt {
-                    margin-top: 245px;
-                    }
-                    .chart .alt + .alt + .alt + .alt + .alt + .alt + .alt + .alt + .alt {
-                      margin-top: 280px;
-                      }
-                      .chart .alt + .alt + .alt + .alt + .alt + .alt + .alt + .alt + .alt + .alt {
-                        margin-top: 315px;
-                        }
+      .chart li:nth-child(13) {
+        margin-top: 70px;
+        }
+      .chart li:nth-child(14) {
+        margin-top: 105px;
+        }
+      .chart li:nth-child(15) {
+        margin-top: 140px;
+        }
+      .chart li:nth-child(16) {
+        margin-top: 175px;
+        }
+      .chart li:nth-child(17) {
+        margin-top: 210px;
+        }
+      .chart li:nth-child(18) {
+        margin-top: 245px;
+        }
+      .chart li:nth-child(19) {
+        margin-top: 280px;
+        }
+      .chart li:nth-child(20) {
+        margin-top: 315px;
+        }
     .chart li h3{
       margin: 0 0 0 5px;
       display: inline;
