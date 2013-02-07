@@ -16,6 +16,7 @@ var bandstatsChart = {
     allRegions: [],
     allGenres: [],
     chartResults: [],
+    userRatings: [],
     limit: 400,
     display: 20,
     page: 1,
@@ -46,6 +47,10 @@ var bandstatsChart = {
 
     setRegion: function(region) {
         bandstatsChart.regions = [region];
+    },
+
+    setUserRatings: function(ratings) {
+        bandstatsChart.userRatings = ratings;
     },
 
     setFacebookId: function(id) {
@@ -191,7 +196,7 @@ var bandstatsChart = {
 
                 // 5 stars here
                 output += "<div class='band_rating'>";
-                output += "<div data-band-id='" + result.bandId + "' class='rate_widget'>";
+                output += "<div id='bsc-rate-widget-" + result.bandId + "' data-band-id='" + result.bandId + "' class='rate_widget'>";
                 output += "<ul class='stars'>";
                 output += "<li class='star_1 ratings_stars'></li>";
                 output += "<li class='star_2 ratings_stars'></li>";
@@ -211,6 +216,10 @@ var bandstatsChart = {
             if (score === end) {
                 break;
             }
+        }
+
+        if (bandstatsChart.facebookId) {
+            bandstatsChart.applyUserRatings();
         }
     },
     
@@ -245,44 +254,6 @@ var bandstatsChart = {
         }
     },
 
-    saveUserPrefs: function() {
-        // save the list to the server
-        var genreList = [];
-        $('.bsc-genre-link:checked').each(function() {
-            genreList.push($(this).val());
-        });
-        var genreListString = genreList.join(",");
-        var url = bandstats.deliDomain + '/save_prefs.php?name=genre-list&value=' + genreListString;
-        $.ajax({
-            url: url,
-            type: 'post',
-            dataType: 'json',
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(errorObj, textStatus, errorMsg) {
-                console.log(url + ' -- ' + JSON.stringify(errorMsg));
-            }
-        });
-    },
-
-    saveBandRating: function(bandId, ratingScore, callback) {
-        var url = bandstatsChart.deliDomain + '/save_rating.php?band_id=' + bandId + '&rating_score=' + ratingScore;
-        $.ajax({
-            url: url,
-            type: 'post',
-            dataType: 'json',
-            success: function(response) {
-                console.log(response);
-                callback(response);
-            },
-            error: function(errorObj, textStatus, errorMsg) {
-                console.log(url + ' -- ' + JSON.stringify(errorMsg));
-            }
-        });
-        
-    },
-    
     _send: function(url, params, dataType, callback) {
         var first = true;
 
@@ -317,11 +288,177 @@ var bandstatsChart = {
                 }
             });
         }
-    } 
+    },
+
+/**
+ * user interaction stuff
+ */
+
+    applyUserPrefs: function() {
+        $.ajax({
+            url: bandstatsChart.deliDomain + '/prefs.php',
+            type: 'get',
+            dataType: 'json',
+            success: function(response) {
+                if (response) {
+                    // apply genres
+                    if (response['genre-list']) {
+                        var genrePrefs = response['genre-list'].split(',');
+                        for (var g in genrePrefs) {
+                            var genre = genrePrefs[g];
+                            bandstatsChart.addGenre(genre);
+                        } 
+                    }
+                    // apply ratings
+                    if (response['band_ratings']) {
+                        bandstatsChart.setUserRatings(response['band_ratings']);
+                        bandstatsChart.applyUserRatings();
+                    }
+                } 
+            },
+            error: function() {
+                console.log('could not get prefs');
+            }
+        }); 
  
+    },
+    
+    applyUserRatings: function() {
+        console.log(bandstatsChart.userRatings);
+        var ratings = bandstatsChart.userRatings;
+        for (var bandId in ratings) {
+            for (var cr in bandstatsChart.chartResults) {
+                var chartResult = bandstatsChart.chartResults[cr];
+                if (bandId = chartResult.bandId) {
+                    var widget = $('#bsc-rate-widget-'+bandId);
+                    var rating = { 
+                        whole_avg: ratings[bandId],
+                        number_votes: 1,
+                        dec_avg: ratings[bandId],
+                        error: ""
+                    }
+                    widget.data('fsr', rating);
+                    bandstatsChart.setRatingWidgetVotes(widget);
+                }
+            }
+        }
+    },
+
+    saveUserPrefs: function() {
+        // save the list to the server
+        var genreList = [];
+        $('.bsc-genre-link:checked').each(function() {
+            genreList.push($(this).val());
+        });
+        var genreListString = genreList.join(",");
+        var url = bandstatsChart.deliDomain + '/save_prefs.php?name=genre-list&value=' + genreListString;
+        $.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(errorObj, textStatus, errorMsg) {
+                console.log(url + ' -- ' + JSON.stringify(errorMsg));
+            }
+        });
+    },
+
+    saveBandRating: function(bandId, ratingScore, callback) {
+        var url = bandstatsChart.deliDomain + '/save_rating.php?band_id=' + bandId + '&rating_score=' + ratingScore;
+        $.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            success: function(response) {
+                console.log(response);
+                callback(response);
+            },
+            error: function(errorObj, textStatus, errorMsg) {
+                console.log(url + ' -- ' + JSON.stringify(errorMsg));
+            }
+        });
+        
+    },
+ 
+    setRatingWidgetVotes: function(widget) {
+        if ($(widget).data('fsr')) {
+            var avg = $(widget).data('fsr').whole_avg;
+            var votes = $(widget).data('fsr').number_votes;
+            var exact = $(widget).data('fsr').dec_avg;
+            var error = $(widget).data('fsr').error;
+
+            $(widget).find('.star_' + avg).prevAll().andSelf().addClass('ratings_vote');
+            $(widget).find('.star_' + avg).nextAll().removeClass('ratings_vote'); 
+        }
+    },
+    
+    facebookInit: function() {
+        window.fbAsyncInit = function() {
+            FB.init({
+                //appId      : '115928858587081',
+                appId      : '204182706372946',
+                channelUrl : '//www.thedelimagazine.com/bandstats/channel.html', 
+                status     : true,
+                cookie     : true, 
+                xfbml      : true 
+            });
+
+            // Additional init code here
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                    // connected
+                    FB.api('/me', function(response) {
+                        console.log(response);
+                        bandstatsChart.setFacebookId(response.id);
+                        bandstatsChart.applyUserPrefs();
+                    });
+                } else if (response.status === 'not_authorized') {
+                    // not_authorized
+                    //bandstatsChart.facebookLogin();
+                } else {
+                    // not_logged_in
+                    //bandstatsChart.facebookLogin();
+                }
+            });
+
+        FB.Event.subscribe('auth.login', function(r) {
+            if ( r.status === 'connected' ) {
+                // a user has logged in
+                FB.api('/me', function(response) {
+                    bandstatsChart.setFacebookId(response.id);
+                    bandstatsChart.applyUserPrefs();
+                });
+            }
+        });
+        }
+    },
+
+    facebookLogin: function() {
+        FB.login(function(response) {
+            if (response.authResponse) {
+                // connected
+                FB.api('/me', function(response) {
+                    bandstatsChart.setFacebookId(response.id);
+                    bandstatsChart.applyUserPrefs();
+                });
+            } else {
+                // cancelled
+                console.log('error loggin in: '+response);
+            }
+        });
+    },
+
+    facebookLogout: function() {
+        FB.logout(function(response) {
+            // logged out
+        });
+    }
 };
 
 $(function(){
+
     /* event handlers */
     $('#bsc-scene-select').change(function() {
         bandstatsChart.setRegion($(this).val());
@@ -363,29 +500,18 @@ $(function(){
         bandstatsChart.displayChart();
     });
 
+    $('.fb-login-button').live('click', function() {
+        bandstatsChart.facebookLogin();
+    });
+
+    $('#bsc-logout-btn').live('click', function() {
+        bandstatsChart.facebookLogout();
+    });
+
     /**
      * 5 star rating functions
      */
 
-    // initial setting
-    $('.rate_widget').each(function(i) {
-        var widget = this;
-        var out_data = {
-            band_id : $(widget).attr('data-band-id')
-        };
-        /*  
-        $.post(
-            '/rating/show',
-            out_data,
-            function(INFO) {
-                $(widget).data( 'fsr', INFO );
-                set_votes(widget);
-            },
-            'json'
-        );
-        */
-    });
-    
     $('.ratings_stars').live({ 
         mouseenter:
             function() {
@@ -396,7 +522,7 @@ $(function(){
             function() {
                 $(this).prevAll().andSelf().removeClass('active');
                 // can't use 'this' because it wont contain the updated data
-                set_votes($(this).closest('.rate_widget'));
+                bandstatsChart.setRatingWidgetVotes($(this).closest('.rate_widget'));
             }
         }
     );
@@ -410,19 +536,8 @@ $(function(){
  
         bandstatsChart.saveBandRating(bandId, ratingScore, function(response) {
             widget.data('fsr', response);
-            set_votes(widget);
+            bandstatsChart.setRatingWidgetVotes(widget);
         });
     });
 
-    function set_votes(widget) {
-        if ($(widget).data('fsr')) {
-            var avg = $(widget).data('fsr').whole_avg;
-            var votes = $(widget).data('fsr').number_votes;
-            var exact = $(widget).data('fsr').dec_avg;
-            var error = $(widget).data('fsr').error;
-
-            $(widget).find('.star_' + avg).prevAll().andSelf().addClass('ratings_vote');
-            $(widget).find('.star_' + avg).nextAll().removeClass('ratings_vote'); 
-        }
-    }
 });
