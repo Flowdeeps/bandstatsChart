@@ -131,8 +131,8 @@
         text-indent: -10000em
         }
       .chart .star4 {
-        width: 177px;
-        /*background: url(../images/img_icon_star_4.png) 0 center no-repeat transparent; */
+        width: 40px;
+        /*background: url(../images/img_icon_star_0.png) 0 center no-repeat transparent; */
         overflow: hidden;
         /* text-indent: -10000em */
         }
@@ -188,34 +188,6 @@
       color: #fff;
       }
 
-/* slide out star rating */
-#slideout {
-  position: absolute;
-  /*display: none;*/
-  left: 0;
-  -webkit-transition-duration: 0.3s;
-  -moz-transition-duration: 0.3s;
-  -o-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-}
-#slideout_inner {
-  position: absolute;
-  /*display: none;*/
-  left: -250px;
-  -webkit-transition-duration: 0.3s;
-  -moz-transition-duration: 0.3s;
-  -o-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-}
-#slideout:hover {
-  left: 250px;
-  display: block;
-}
-#slideout:hover #slideout_inner {
-  left: 0;
-  display: block;
-}
-
 /* star rating styles */
 .band_rating {
     margin-bottom: 18px;
@@ -228,12 +200,23 @@
     .stars {
         background-color: white;
         padding: 0;
-        margin: 0 4px 0 0;
+        margin: 3px 29px 0 0;
         list-style-type: none;
         display: inline-block;
+        width: 19px;
+        height: 24px;
+        -webkit-transition-duration: 0.3s;
+        -moz-transition-duration: 0.3s;
+        -o-transition-duration: 0.3s;
+        transition-duration: 0.3s;
+        }
+        .stars:hover {
+          margin: 3px -51px 0 0;
+          width: 100px;    
+          z-index: 10001;
         }
     .ratings_stars {
-        background: url('../images/img_icon_star_0.png') no-repeat;
+        background: url('../images/img_icon_star_0.png') center no-repeat transparent;
         display: inline-block;
         height: 16px;
         padding: 0;
@@ -242,11 +225,11 @@
         line-height: 16px;
         }
         .ratings_vote {
-          background: url('../images/img_icon_star_3.png') no-repeat;
+          background: url('../images/img_icon_star_3.png') center no-repeat transparent;
           }
         .ratings_stars:hover,
         .ratings_stars.active {
-          background: url('../images/img_icon_star_4.png') no-repeat;
+          background: url('../images/img_icon_star_4.png') center no-repeat transparent;
           }
 
     .total_votes, .rating_error, .rating_label {

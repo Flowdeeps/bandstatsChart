@@ -184,7 +184,6 @@ var bandstatsChart = {
                 output += "<ul><li class='star4' data-band-id='" + result.bandId + "'>";
                 // slide out 5 star rating
                 //output += "<div id='slideout'>";
-                //output += "<img src='images/img_icon_star_2.png'>";
                 //output += "<div id='slideout_inner'>";
 
                 // 5 stars here
@@ -365,12 +364,12 @@ $(function(){
         // Handles the mouseover
         function() {
             console.log('Im in');
-            $(this).prevAll().andSelf().addClass('ratings_over');
+            $(this).prevAll().andSelf().addClass('active');
             $(this).nextAll().removeClass('ratings_vote'); 
         },
         // Handles the mouseout
         function() {
-            $(this).prevAll().andSelf().removeClass('ratings_over');
+            $(this).prevAll().andSelf().removeClass('active');
             // can't use 'this' because it wont contain the updated data
             set_votes($(this).closest('.rate_widget'));
         }
