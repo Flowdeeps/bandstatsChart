@@ -73,7 +73,6 @@
 
 <script type="text/javascript">
     bandstatsChart.init(function() {
-
         bandstatsChart.getAllRegions();
         bandstatsChart.getAllGenres();
         bandstatsChart.getChart('','','',20);
@@ -116,13 +115,14 @@
             type: 'get',
             dataType: 'json',
             success: function(response) {
-                console.log(response);
-                if (response['genre-list']) {
-                    var genrePrefs = response['genre-list'].split(',');
-                    for (var g in genrePrefs) {
-                        var genre = genrePrefs[g];
-                        bandstatsChart.addGenre(genre);
-                    } 
+                if (response) {
+                    if (response['genre-list']) {
+                        var genrePrefs = response['genre-list'].split(',');
+                        for (var g in genrePrefs) {
+                            var genre = genrePrefs[g];
+                            bandstatsChart.addGenre(genre);
+                        } 
+                    }
                 } 
             },
             error: function() {
