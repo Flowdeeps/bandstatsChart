@@ -130,13 +130,29 @@ var bandstatsChart = {
 
     addGenresOptions: function(results) {
         $('#bsc-genre-select').empty();
+
+        // first add parent
         for (var g in results) {
             var genre = results[g];
-            var output = "<li>";
-            
-            output += "<input class='bsc-genre-link' type='checkbox' name='" + genre.genreName + "' value='" + genre.genreName + "' />";
-            output += genre.genreName + "</li>";
-            $('#bsc-genre-select').append(output);
+            if (genre.genreId === genre.parentId) {
+                var output = "<section id='" + genre.genreName.replace(" ","-") + "'>";
+                output += "<h2><a href='#" + genre.genreName.replace(" ","-") + "'>" +  genre.genreName.replace(" ","-") + "</a></h2>";
+                output += "<p><ul id='bsc-genre-children-" + genre.genreId + "'>";
+                output += "</ul>";  
+                output += "</section>";
+                $('#bsc-genre-tree').append(output);
+            }
+        }
+
+        // now add children
+        for (var g in results) {
+            var genre = results[g];
+            if (genre.parentId != genre.genreId) {
+                var output = "<li>";
+                output += "<input class='bsc-genre-link' type='checkbox' name='" + genre.genreName + "' value='" + genre.genreName + "' />";
+                output += genre.genreName + "</li>";
+                $('#bsc-genre-children-' + genre.parentId).append(output);
+            }
         }
     }, 
 
