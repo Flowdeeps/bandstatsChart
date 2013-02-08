@@ -155,7 +155,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    line-height: 32px;
+    line-height: 17px;
     text-indent: 10px;
     }
     .citycharts aside ul li {
@@ -264,11 +264,11 @@
 
 /* genre accordian */
 .accordion { 
-     width:300px;
-     overflow:hidden; 
+     width: 250px;
+     overflow: hidden; 
      /* margin:10px auto; */
      color: #666; 
-     background: #aaa; 
+     background: #ddd;
      /* padding:10px; */
 }
 
@@ -290,7 +290,8 @@
 
 .accordion section:target { 
       background:#FFF; 
-      padding:10px;
+      padding: 5px;
+      width: 234px;
 }
 .accordion section:target:hover { 
       background:#FFF; 
@@ -308,7 +309,7 @@
 .accordion section h2 a{
       padding:8px 10px;
       display:block; 
-      font-size:16px; 
+      font-size:12px; 
       font-weight:normal;
       color:#eee; 
       text-decoration:none; 
@@ -316,7 +317,7 @@
 
 .vertical section{ 
      width: 98%; 
-     height: 28px; 
+     height: 23px; 
      -webkit-transition:height 0.2s ease-out;
      -moz-transition:height 0.2s ease-out;
      -o-transition:height 0.2s ease-out;
@@ -325,8 +326,8 @@
 
 /*Set height of the slide*/
 .vertical :target{ 
-     height:200px; 
-     width:90%;
+     height: 100%; 
+     width: 90%;
 }
 
 .vertical section h2 { 

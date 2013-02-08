@@ -135,7 +135,7 @@ var bandstatsChart = {
         for (var g in results) {
             var genre = results[g];
             if (genre.genreId === genre.parentId) {
-                var output = "<section id='" + genre.genreName.replace(" ","-") + "'>";
+                var output = "<section id='" + genre.genreName.replace(" ","-") + "' class='bsc-genre-parent-header'>";
                 output += "<h2><a href='#" + genre.genreName.replace(" ","-") + "'>" +  genre.genreName.replace(" ","-") + "</a></h2>";
                 output += "<p><ul id='bsc-genre-children-" + genre.genreId + "'>";
                 output += "</ul>";  
