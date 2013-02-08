@@ -21,7 +21,7 @@ var bandstatsChart = {
     limit: 400,
     display: 20,
     page: 1,
- 
+    format: 'full', 
     defaultRegion: 'NYC',
     defaultChartType: 'bandScore',
 
@@ -79,6 +79,7 @@ var bandstatsChart = {
 
     addRegionsOptions: function(results) {
         $('#bsc-scene-select').empty();
+        $('#bsc-scene-select').append("<option value=''>All Regions</option>");
         for (var r in results) {
             var region = results[r];
             $('#bsc-scene-select').append("<option value='" + region.regionName + "'>" + region.regionName + '</option>');
@@ -135,11 +136,11 @@ var bandstatsChart = {
         for (var g in results) {
             var genre = results[g];
             if (genre.genreId === genre.parentId) {
-                var output = "<section id='" + genre.genreName.replace(" ","-") + "' class='bsc-genre-parent-header'>";
-                output += "<h2><a href='#" + genre.genreName.replace(" ","-") + "'>" +  genre.genreName.replace(" ","-") + "</a></h2>";
-                output += "<p><ul id='bsc-genre-children-" + genre.genreId + "'>";
+                var output = "<li data-genre-id='" + genre.genreId + "' class='expandable'>";
+                output += "<h2 class='expandable header bsc-genre-parent'><a href='#'>" +  genre.genreName + "</a></h2>";
+                output += "<ul id='bsc-genre-children-" + genre.genreId + "' class='bsc-genre-child expandable collapsed'>";
                 output += "</ul>";  
-                output += "</section>";
+                output += "</li>";
                 $('#bsc-genre-tree').append(output);
             }
         }
@@ -478,6 +479,21 @@ var bandstatsChart = {
         FB.logout(function(response) {
             // logged out
         });
+    },
+
+    /**
+     * HTML stuff
+     */
+    writeMenu: function() {
+
+    },
+
+    writeChart: function() {
+
+    },
+
+    writeAside: function() {
+
     }
 };
 
@@ -582,4 +598,20 @@ $(function(){
         });
     });
 
+    /**
+     * expandable stuff
+     */
+    $('.bsc-genre-parent').live('click', function() {
+        var child = $(this).next('.bsc-genre-child');
+        if (child.hasClass('collapsed')) {
+            $(this).css("background-image", "url(./images/icon-arrow-down-black.png)");
+            child.removeClass('collapsed');
+            child.addClass('expanded');
+        } else {
+            $(this).css("background-image", "url(./images/icon-arrow-top-black.png)");
+            child.removeClass('expanded');
+            child.addClass('collapsed');
+        }
+        return false;
+    });
 });

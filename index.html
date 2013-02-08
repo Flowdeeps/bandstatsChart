@@ -10,8 +10,8 @@
   <script type="text/javascript" src="js/charts.js"></script>
 
 </head>
-<body class="citycharts">
-  <div>
+<body>
+  <div class="citycharts">
     <form class="band-list">
       <fieldset id="city">
         <label>Scene</label>
@@ -34,16 +34,6 @@
           <option value= "lastFMListeners">Last.FM Fans</option>
         </select>
       </fieldset>
-    <!-- leaving out for now
-      <fieldset id="limit">
-        <label>Limit</label>
-        <select id="bsc-limit-select">
-          <option value="20">20</option>
-          <option value="40">40</option>
-          <option value="60">60</option>
-        </select>
-      </fieldset>
-    --> 
       <button id="bsc-prev" class="prev">&lt;</button>
       <button id="bsc-next" class="next">&gt;</button>
     </form>
@@ -66,8 +56,8 @@
             </h3>
         </div>
 
-        <div id="bsc-genre-tree" class="accordion vertical">
-        </div>
+        <ul id="bsc-genre-tree">
+        </ul>
 
     </aside>
   </div>

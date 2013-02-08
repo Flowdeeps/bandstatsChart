@@ -263,85 +263,16 @@
             }
 
 
-/* genre accordian */
-.accordion { 
-     width: 250px;
-     overflow: hidden; 
-     /* margin:10px auto; */
-     color: #666; 
-     background: #ddd;
-     /* padding:10px; */
-}
+.expandable {
 
-.accordion section{ 
-      float:left;
-      overflow:hidden; 
-      color:#666; 
-      cursor:pointer; 
-      background: #666; 
-      margin:3px; 
-}
-.accordion section:hover {
-      background:#444;
-}
-
-.accordion section p { 
-      display:none; 
-}
-
-.accordion section:target { 
-      background:#FFF; 
-      padding: 5px;
-      width: 234px;
-}
-.accordion section:target:hover { 
-      background:#FFF; 
-}
-.accordion section:target h2 {
-      width:100%;
-}
-.accordion section:target h2 a{ 
-      color:#333; 
-      padding:0;
-}
-.accordion section:target p {
-      display:block;
-}
-.accordion section h2 a{
-      padding:8px 10px;
-      display:block; 
-      font-size:12px; 
-      font-weight:normal;
-      color:#eee; 
-      text-decoration:none; 
-}
-
-.vertical section{ 
-     width: 98%; 
-     height: 23px; 
-     -webkit-transition:height 0.2s ease-out;
-     -moz-transition:height 0.2s ease-out;
-     -o-transition:height 0.2s ease-out;
-     transition:height 0.2s ease-out;
-}
-
-/*Set height of the slide*/
-.vertical :target{ 
-     height: 100%; 
-     width: 90%;
-}
-
-.vertical section h2 { 
-     position:relative; 
-     left:0; 
-     top:-15px; 
-}
-/*Set position of the number on the slide*/
-.vertical section:after{ 
-      top:-60px;
-      left:310px;
-}
-.vertical section:target:after{ 
-      /* left:-9999px; */
-}
-
+   }
+  .header {
+    background: url('../images/icon-arrow-top-black.png') no-repeat transparent;
+   }
+  .expanded {
+    height: 100%;
+   }
+  .collapsed {
+    height: 0px;
+    overflow: hidden;
+    }
