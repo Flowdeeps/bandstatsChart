@@ -429,6 +429,12 @@ var bandstatsChart = {
             var votes = $(widget).data('fsr').number_votes;
             var exact = $(widget).data('fsr').dec_avg;
             var error = $(widget).data('fsr').error;
+            if (votes === 0) {
+                $(widget).find('.ratings_stars').each(function() {
+                    $(this).removeClass('ratings_vote');
+                });
+                return false;
+            };
 
             $(widget).find('.star_' + avg).prevAll().andSelf().addClass('ratings_vote');
             $(widget).find('.star_' + avg).nextAll().removeClass('ratings_vote'); 
@@ -612,7 +618,7 @@ $(function(){
     );
 
     // This actually records the vote
-    $('.ratings_stars').live('click', function() {
+    $('.ratings_stars, .ratings_delete').live('click', function() {
 
         if (!bandstatsChart.facebookId) {
             alert('You must be logged in with facebook to use this feature');

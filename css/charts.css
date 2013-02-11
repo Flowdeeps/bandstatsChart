@@ -232,17 +232,17 @@
           width: 120px;    
           z-index: 10001;
         }
-    .ratings_delete{
-        background: url('../images/img_icon_delete.png') center no-repeat transparent;
+    .ratings_stars {
+        background: url('../images/img_icon_star_0.png') center no-repeat transparent;
         display: inline-block;
         height: 16px;
         padding: 0;
         width: 16px;
         margin-right: 4px;
         line-height: 16px;
-     }
-    .ratings_stars {
-        background: url('../images/img_icon_star_0.png') center no-repeat transparent;
+        }
+    .ratings_delete{
+        background: url('../images/img_icon_delete.png') center no-repeat transparent;
         display: inline-block;
         height: 16px;
         padding: 0;
