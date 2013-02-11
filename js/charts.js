@@ -246,7 +246,9 @@ var bandstatsChart = {
                 output += "</div>";
 
                 output += "</li>";
-                output += "<li class='facebook'>Band Facebook Page</li>";
+                if (result.bandUrl.match(/facebook\.com/gi)) {
+                    output += "<li class='facebook' data-href='" + result.bandUrl + "'>Band Facebook Page</li>";
+                }
                 output += "<li class='listen' data-band-name='" + result.bandName + "'>Listen</li></ul></li>";
                 
                 $('#bsc-chart').append(output);
@@ -490,6 +492,7 @@ var bandstatsChart = {
     facebookLogout: function() {
         FB.logout(function(response) {
             // logged out
+            bandstatsChart.facebookId = null;
         });
     },
 
@@ -583,6 +586,10 @@ $(function(){
         bandstatsChart.facebookLogout();
     });
 
+    $('.facebook').live('click', function() {
+        window.open($(this).attr('data-href'), '_blank');
+    });
+
     /**
      * 5 star rating functions
      */
@@ -604,6 +611,11 @@ $(function(){
 
     // This actually records the vote
     $('.ratings_stars').live('click', function() {
+
+        if (!bandstatsChart.facebookId) {
+            alert('You must be logged in with facebook to use this feature');
+            return false;
+        }
         var star = this;
         var widget = $(this).closest('.rate_widget');
         var ratingScore = $(star).attr('class').match(/star_(\d+)/)[1];

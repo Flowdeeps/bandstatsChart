@@ -86,7 +86,7 @@
         }
     .chart li ul {
       position: absolute;
-      right: 10px;
+      right: 18px;
       top: 0;
       }
       .chart li ul li{
@@ -96,6 +96,7 @@
       .chart .star,
       .chart .facebook,
       .chart .listen {
+        cursor: pointer;
         width: 17px;
         overflow: hidden;
         text-indent: -10000em 
@@ -147,6 +148,7 @@
       .chart .listen {
         background: url(../images/img_icon_headphones.jpg) 0 center no-repeat transparent;
         width: 19px;
+        margin-left: 5px;
         }
 
 .citycharts aside {
