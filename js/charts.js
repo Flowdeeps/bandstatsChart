@@ -241,6 +241,7 @@ var bandstatsChart = {
                 output += "<li class='star_3 ratings_stars'></li>";
                 output += "<li class='star_4 ratings_stars'></li>";
                 output += "<li class='star_5 ratings_stars'></li>";
+                output += "<li class='star_0 ratings_delete'></li>";
                 output += "</ul>";
                 output += "</div>";
                 output += "</div>";
@@ -378,6 +379,7 @@ var bandstatsChart = {
                     }
                     widget.data('fsr', rating);
                     bandstatsChart.setRatingWidgetVotes(widget);
+                    // add unstar option to band
                 }
             }
         }
