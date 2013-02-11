@@ -101,6 +101,15 @@ var bandstatsChart = {
         }
     },
 
+    resetGenres: function() {
+        bandstatsChart.genres = [];
+        bandstatsChart.showSelectedGenres();
+        bandstatsChart.getChart();
+        if (bandstatsChart.facebookId) {
+            bandstatsChart.saveUserPrefs();
+        }
+    },
+
     removeGenre: function(genre) {
         var index = bandstatsChart.genres.indexOf(genre);
         bandstatsChart.genres.splice(index, 1);
@@ -110,6 +119,9 @@ var bandstatsChart = {
 
     showSelectedGenres: function() {
         $('#bsc-genre-list').empty();
+        $('.bsc-genre-link').each(function() {
+            $(this).attr('checked', false);
+        });
         for (var g in bandstatsChart.genres) {
             var genre = bandstatsChart.genres[g];
             var output = "<li><a href='#'>" + genre + "</a></li>";
@@ -526,6 +538,11 @@ $(function(){
             // show facebook features
             alert('login with facebook');
         }
+    });
+
+    $('#bsc-reset-genres').live('click', function() {
+        bandstatsChart.resetGenres();
+        return false;
     });
 
     $('.bsc-genre-link').live('click', function() {
