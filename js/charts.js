@@ -645,7 +645,7 @@ $(function(){
             child.removeClass('collapsed');
             child.addClass('expanded');
         } else {
-            $(this).css("background-image", "url(./images/icon-arrow-top-black.png)");
+            $(this).css("background-image", "url(./images/icon-arrow-top-black-right.png)");
             child.removeClass('expanded');
             child.addClass('collapsed');
         }
