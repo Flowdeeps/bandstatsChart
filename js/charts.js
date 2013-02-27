@@ -12,6 +12,7 @@ var bandstatsChart = {
     genres: [],
     regions: [], 
     bandNames: [],
+    bandName: '',
     bandIds: [],
     chartType: '',
     allRegions: [],
@@ -229,7 +230,18 @@ var bandstatsChart = {
                 } else {
                     output += "<li class='alt'><h3><span>" + score + "</span>";
                 }
-                output += result.bandName + "</h3>";
+
+                if (bandstatsChart.bandName) {
+                    var regexp = new RegExp(bandstatsChart.bandName, 'i');
+                    if (result.bandName.match(regexp)) {
+                        output += "<font color='red'>*" + result.bandName + "</font></h3>";
+                    } else {
+                        output += result.bandName + "</h3>";
+                    }
+                } else {
+                    output += result.bandName + "</h3>";
+                }
+
                 output += "<ul><li class='star4' data-band-id='" + result.bandId + "'>";
 
                 // 5 stars here
@@ -279,6 +291,23 @@ var bandstatsChart = {
             bandstatsChart.page--;
             bandstatsChart.displayChart();
         }
+    },
+
+    displayChartForBand: function(bandName) {
+        for (var b in bandstatsChart.chartResults) {
+            var band = bandstatsChart.chartResults[b];
+            var regexp = new RegExp(bandName, 'i');
+            if (band.bandName.match(regexp)) {
+                var placement = parseInt(b) + 1;
+                var page = Math.ceil(placement / bandstatsChart.display);
+                bandstatsChart.bandName = bandName;
+                bandstatsChart.page = page;
+                bandstatsChart.displayChart();
+                return true;
+            }
+        }
+        // if not match found
+        alert(bandName + ' has not made it into the chart');
     },
 
     showLoading: function() {
@@ -596,6 +625,14 @@ $(function(){
 
     $('.facebook').live('click', function() {
         window.open($(this).attr('data-href'), '_blank');
+    });
+
+    $('#bs-band-name').on('keypress', function(e) {
+        if(e.keyCode==13){
+        // Enter pressed...
+            bandstatsChart.displayChartForBand($(this).val());
+            return false;
+        }
     });
 
     /**
