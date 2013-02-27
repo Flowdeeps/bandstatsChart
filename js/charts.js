@@ -247,8 +247,8 @@ var bandstatsChart = {
                 output += "</div>";
 
                 output += "</li>";
-                if (result.bandUrl.match(/facebook\.com/gi)) {
-                    output += "<li class='facebook' data-href='" + result.bandUrl + "'>Band Facebook Page</li>";
+                if (result.bandFacebookId) {
+                    output += "<li class='facebook' data-href='http://www.facebook.com/" + result.bandFacebookId + "'>Band Facebook Page</li>";
                 }
                 output += "<li class='listen' data-band-name='" + result.bandName + "'>Listen</li></ul></li>";
                 
