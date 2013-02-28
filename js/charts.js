@@ -120,6 +120,7 @@ var bandstatsChart = {
 
     showSelectedGenres: function() {
         $('#bsc-genre-list').empty();
+        bandstatsChart.page = 1;
         $('.bsc-genre-link').each(function() {
             $(this).attr('checked', false);
         });
@@ -279,7 +280,7 @@ var bandstatsChart = {
     displayNextChart: function() {
         var nextEnd = ((bandstatsChart.page+1) * bandstatsChart.display);
         var total = bandstatsChart.chartResults.length;
-        var hasMore = ((nextEnd < bandstatsChart.limit) && (nextEnd < total)); 
+        var hasMore = ((nextEnd <= bandstatsChart.limit) && (nextEnd <= total)); 
         if (hasMore) {
             bandstatsChart.page++;
             bandstatsChart.displayChart();
