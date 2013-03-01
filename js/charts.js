@@ -130,12 +130,15 @@ var bandstatsChart = {
     },
 
     showSelectedRegions: function() {
+        $('#bsc-region-list').empty();
         bandstatsChart.page = 1;
         $('.bsc-region-option').each(function() {
             $(this).attr('checked', false);
         });
         for (var r in bandstatsChart.regions) {
             var region = bandstatsChart.regions[r];
+            var output = "<li><a href='#'>" + region + "</a></li>";
+            $('#bsc-region-list').append(output);
             $("input:checkbox[value='" + region + "']").attr("checked", true);
         }
     },
