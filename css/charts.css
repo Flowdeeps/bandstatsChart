@@ -380,6 +380,16 @@
   margin: 0 0 0 -25%;
   z-index: 200;
   }
+  #modal #close {
+    background: url(../images/bg_close.png) 0 0 no-repeat transparent;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    overflow: hidden;
+    height: 19px;
+    width: 19px;
+    text-indent: -10000em;
+    }
   #modal #bsc-region-grandparents-list {
     list-style: none;
     margin: 10px 0;
