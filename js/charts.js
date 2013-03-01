@@ -710,7 +710,6 @@ $(function(){
             }
             //bandstatsChart.saveUserPrefs();
         }
-        return false;
     });
 
     $('#select-regions').on('click', function() {
