@@ -729,7 +729,7 @@ $(function(){
             if ($(this).hasClass('bsc-region-parent')) {
                 var regionId =  $(this).attr('data-id');
                 // expand children
-                $(this).children($('.bsc-region-child-list')).css('height', '0');
+                $('#bsc-region-parent-' + regionId).css('height', '0').css('overflow', 'hidden');
                 // check all children
                 $('#bsc-region-parent-' + regionId).find($('.bsc-region-option')).each(function() {
                     $(this).attr('checked', false);
@@ -742,7 +742,7 @@ $(function(){
             if ($(this).hasClass('bsc-region-parent')) {
                 var regionId =  $(this).attr('data-id');
                 // expand children
-                $(this).children($('.bsc-region-child-list')).css('height', 'auto');
+                $('#bsc-region-parent-' + regionId).css('height', 'auto').css('overflow', 'visible');
                 // check all children
                 $('#bsc-region-parent-' + regionId).find($('.bsc-region-option')).each(function() {
                     $(this).attr('checked', true);
