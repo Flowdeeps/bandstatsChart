@@ -79,12 +79,44 @@ var bandstatsChart = {
     },
 
     addRegionsOptions: function(results) {
-        $('#bsc-scene-select').empty();
-        $('#bsc-scene-select').append("<option value=''>All Regions</option>");
+        $('#bsc-region-options').empty();
+        $('#bsc-region-options').append("<ul id='bsc-region-grandparents-list'></ul>");
+
+        // add grand parents
         for (var r in results) {
             var region = results[r];
-            $('#bsc-scene-select').append("<option value='" + region.regionName + "'>" + region.regionName + '</option>');
+            if (region.regionDesc == "grandparent") {
+                var output = "<li class='bsc-region-grandparent'>";
+                output += "<h4>" + region.regionName + "</h4>";
+                output += "<ul class='bsc-region-grandparent-list' id='bsc-region-grandparent-" + region.regionId + "'></ul>"; 
+                output += "</li>";
+                $('#bsc-region-grandparents-list').append(output);
+            }
         }
+
+        // add parents 
+        for (var r in results) {
+            var region = results[r];
+            if (region.regionDesc == "parent") {
+                var output = "<li class='bsc-region-parent'>";
+                output += "<h4>" + region.regionName + "</h4>";
+                output += "<ul class='bsc-region-parent-list' id='bsc-region-parent-" + region.regionId + "'></ul>";
+                output += "</li>";
+                $('#bsc-region-grandparent-' + region.parentId).append(output);
+            }
+        }
+        
+        // add children
+        for (var r in results) {
+            var region = results[r];
+            if (region.regionDesc == "") {
+                var output = "<li class='bsc-region-parent'>";
+                output += "<h4>" + region.regionName + "</h4>";
+                output += "</li>";
+                $('#bsc-region-parent-' + region.parentId).append(output);
+            }
+        }
+
         bandstatsChart.showSelectedRegion();
     },
 
