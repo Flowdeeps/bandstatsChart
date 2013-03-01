@@ -281,31 +281,39 @@
             font-weight: normal;
             }
 /* only the first child h3 in the aside */
-aside > div > h3 {
-  margin: 0;
-  line-height: 30px;
-  }
-  aside > div > h3 a {
-    background: #999;
-    line-height: 20px;
-    margin: 3px 0 5px;
-    text-align: center;
-    color: #333;
-    display: block;
-    max-width: 150px;
-    -webkit-border-radius: 3px;
-       -moz-border-radius: 3px;
-        -ms-border-radius: 3px;
-         -o-border-radius: 3px;
-            border-radius: 3px;
-    border: solid 1px #666;
-    text-shadow: 0 1px 1px #fff;
-    box-shadow: 1px 1px 1px #000;
-    text-decoration: none;
+  #sort-options {
+    height: 30px;
+    margin: 0;
+    list-style: none;
     }
-    aside > div > h3 a:hover {
-      text-decoration: underline;
+    #sort-options li {
+      background: none;
+      margin: 0 7px 0 0;
+      line-height: 30px;
+      display: inline-block;
       }
+      #sort-options li a {
+        background: #999;
+        line-height: 20px;
+        margin: 3px 0 5px;
+        padding: 0 10px;
+        text-indent: 0;
+        color: #333;
+        display: block;
+        max-width: 150px;
+        -webkit-border-radius: 3px;
+           -moz-border-radius: 3px;
+            -ms-border-radius: 3px;
+             -o-border-radius: 3px;
+                border-radius: 3px;
+        border: solid 1px #666;
+        text-shadow: 0 1px 1px #fff;
+        box-shadow: 1px 1px 1px #000;
+        text-decoration: none;
+        }
+        #sort-options li a:hover {
+          text-decoration: underline;
+          }
 
 .expandable {
    }
