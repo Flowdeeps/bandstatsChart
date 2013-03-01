@@ -112,7 +112,7 @@ var bandstatsChart = {
             var region = results[r];
             if (region.regionDesc == "parent") {
                 var output = "<li class='bsc-region-parent'>";
-                output += "<input class='bsc-region-option bsc-region-parent' value='" + region.regionName + "' type='checkbox' data-id='" + region.regionId + "'><label for='" + region.regionName + "'>" + region.regionName + "</label>";
+                output += "<input id='" + region.regionName + "' class='bsc-region-option bsc-region-parent' value='" + region.regionName + "' type='checkbox' data-id='" + region.regionId + "'><label for='" + region.regionName + "'>" + region.regionName + "</label>";
                 if (realParents.indexOf(region.regionId) > 0) {
                     output += "<ul class='bsc-region-child-list' data-region='" + region.regionName + "' id='bsc-region-parent-" + region.regionId + "'></ul>";
                 }
@@ -126,7 +126,7 @@ var bandstatsChart = {
             var region = results[r];
             if (region.regionDesc != "parent" && region.regionDesc != "grandparent") {
                 var output = "<li class='bsc-region-child'>";
-                output += "<input class='bsc-region-option' value='" + region.regionName + "' type='checkbox' id='" + region.regionName + "'><label for='" + region.regionName + "'>" + region.regionName + "</label>";
+                output += "<input id='" + region.regionName + "' class='bsc-region-option' value='" + region.regionName + "' type='checkbox' id='" + region.regionName + "'><label for='" + region.regionName + "'>" + region.regionName + "</label>";
                 output += "</li>";
                 $('#bsc-region-parent-' + region.parentId).append(output);
             }
