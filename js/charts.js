@@ -91,6 +91,7 @@ var bandstatsChart = {
         $('#modal').append("<a href='#' id='close'>Close</a>");
         $('#modal').append("<ul id='bsc-region-grandparents-list'></ul>");
 
+        var realParents = [];
         // add grand parents
         for (var r in results) {
             var region = results[r];
@@ -101,6 +102,9 @@ var bandstatsChart = {
                 output += "</li>";
                 $('#bsc-region-grandparents-list').append(output);
             }
+            if (region.parentId) {
+                realParents.push(region.parentId);
+            }
         }
 
         // add parents 
@@ -109,7 +113,9 @@ var bandstatsChart = {
             if (region.regionDesc == "parent") {
                 var output = "<li class='bsc-region-parent'>";
                 output += "<input class='bsc-region-option bsc-region-parent' value='" + region.regionName + "' type='checkbox' data-id='" + region.regionId + "'><label for='" + region.regionName + "'>" + region.regionName + "</label>";
-                output += "<ul class='bsc-region-child-list' data-region='" + region.regionName + "' id='bsc-region-parent-" + region.regionId + "'></ul>";
+                if (realParents.indexOf(region.regionId) > 0) {
+                    output += "<ul class='bsc-region-child-list' data-region='" + region.regionName + "' id='bsc-region-parent-" + region.regionId + "'></ul>";
+                }
                 output += "</li>";
                 $('#bsc-region-parent-' + region.parentId).append(output);
             }
