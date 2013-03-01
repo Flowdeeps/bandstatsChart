@@ -280,7 +280,32 @@
             font-family: UnitSlabWeb-Bold, Georgia, "Times New Roman", Times, serif;
             font-weight: normal;
             }
-
+/* only the first child h3 in the aside */
+aside > div > h3 {
+  margin: 0;
+  line-height: 30px;
+  }
+  aside > div > h3 a {
+    background: #999;
+    line-height: 20px;
+    margin: 4px 0;
+    text-align: center;
+    color: #333;
+    display: block;
+    max-width: 150px;
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+        -ms-border-radius: 3px;
+         -o-border-radius: 3px;
+            border-radius: 3px;
+    border: solid 1px #666;
+    text-shadow: 0 1px 1px #fff;
+    box-shadow: 1px 1px 1px #000;
+    text-decoration: none;
+    }
+    aside > div > h3 a:hover {
+      text-decoration: underline;
+      }
 
 .expandable {
    }
@@ -289,8 +314,8 @@
     }
   .header {
     background: url('../images/icon-arrow-top-black-right.png') 5px center no-repeat transparent;
-    margin: 0;
     text-indent: 18px;
+    margin: 0;
     line-height: 30px;
     cursor: pointer;
     }
