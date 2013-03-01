@@ -313,3 +313,18 @@
 .fb-login-buttonbutton {
   margin-left: 40px;
 }
+
+
+/* overlay stuff */
+#overlay {
+  display: none;
+  background: #fff;
+  opacity: .75;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  }
