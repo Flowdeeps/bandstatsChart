@@ -384,7 +384,7 @@ var bandstatsChart = {
         for (param in params) {
             url += (first) ? '?' : '&';
             first=false;
-            url += param + "=" + params[param]
+            url += param + "=" + encodeURIComponent(params[param]);
         }
 
         bandstatsChart.log(url);
