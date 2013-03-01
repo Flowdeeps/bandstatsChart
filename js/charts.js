@@ -728,6 +728,8 @@ $(function(){
             bandstatsChart.removeRegion($(this).val());
             if ($(this).hasClass('bsc-region-parent')) {
                 var regionId =  $(this).attr('data-id');
+                // expand children
+                $(this).children($('.bsc-region-child-list')).css('height', '0');
                 // check all children
                 $('#bsc-region-parent-' + regionId).find($('.bsc-region-option')).each(function() {
                     $(this).attr('checked', false);
@@ -739,6 +741,8 @@ $(function(){
             bandstatsChart.addRegion($(this).val());
             if ($(this).hasClass('bsc-region-parent')) {
                 var regionId =  $(this).attr('data-id');
+                // expand children
+                $(this).children($('.bsc-region-child-list')).css('height', 'auto');
                 // check all children
                 $('#bsc-region-parent-' + regionId).find($('.bsc-region-option')).each(function() {
                     $(this).attr('checked', true);
