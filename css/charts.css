@@ -9,10 +9,13 @@
 
 /* genre */
 .genres {
+  clear: left;
+  min-height: 20px;
   }
   .genres h3 {
     display: inline-block;
-    line-height: 30px;
+    float: left;
+    line-height: 20px;
     text-indent: 18px;
     margin: 0;
     color: #333;
@@ -21,13 +24,40 @@
     color: #f0a36f;
     }
   .genres ul {
-    margin: 0;
+    margin: 0 0 0 100px;
     padding: 0;
-    display: inline;
+    display: block;
     }
     .genres ul li {
       display: inline;
-      padding: 3px;
+      line-height: 20px;
+      padding:  3px 3px 3px 0;
+      }
+/* regions */
+.regions {
+  clear: left;
+  min-height: 20px;
+  }
+  .regions h3 {
+    display: inline-block;
+    float: left;
+    line-height: 20px;
+    text-indent: 18px;
+    margin: 0;
+    color: #333;
+    }
+  .regions a {
+    color: #f0a36f;
+    }
+  .regions ul {
+    margin: 0 0 0 100px;
+    padding: 0;
+    display: block;
+    }
+    .regions ul li {
+      display: inline;
+      line-height: 20px;
+      padding: 3px 3px 3px 0;
       }
 
 /* chart */
@@ -282,20 +312,20 @@
             }
 /* only the first child h3 in the aside */
   #sort-options {
-    height: 30px;
+    height: 40px;
     margin: 0;
     list-style: none;
     }
     #sort-options li {
       background: none;
       margin: 0 7px 0 0;
-      line-height: 30px;
+      line-height: 40px;
       display: inline-block;
       }
       #sort-options li a {
         background: #999;
         line-height: 20px;
-        margin: 3px 0 5px;
+        margin: 8px 0 5px;
         padding: 0 10px;
         text-indent: 0;
         color: #333;
