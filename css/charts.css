@@ -383,8 +383,8 @@
   #modal #close {
     background: url(../images/bg_close.png) 0 0 no-repeat transparent;
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 11px;
+    right: 11px;
     overflow: hidden;
     height: 19px;
     width: 19px;
@@ -392,7 +392,7 @@
     }
   #modal #bsc-region-grandparents-list {
     list-style: none;
-    margin: 10px 0;
+    margin: 10px;
     padding: 0;
     }
     #modal #bsc-region-grandparents-list ul {
