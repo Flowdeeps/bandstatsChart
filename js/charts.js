@@ -710,18 +710,21 @@ $(function(){
             }
             //bandstatsChart.saveUserPrefs();
         }
+        return false;
     });
 
     $('#select-regions').on('click', function() {
         $('#overlay').fadeIn(function() {
             $('#modal').fadeIn();
             bandstatsChart.showSelectedRegions();
+            return false;
         })
     });
 
     $('#close').live('click', function() {
         $('#modal').fadeOut(function() {
             $('#overlay').fadeOut();
+            return false;
         });
     });
 
