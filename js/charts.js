@@ -118,8 +118,8 @@ var bandstatsChart = {
         // add children
         for (var r in results) {
             var region = results[r];
-            if (region.regionDesc != "parent" && region.regionDesc != "granparent") {
-                var output = "<li class='bsc-region-parent'>";
+            if (region.regionDesc != "parent" && region.regionDesc != "grandparent") {
+                var output = "<li class='bsc-region-child'>";
                 output += "<input class='bsc-region-option' value='" + region.regionName + "' type='checkbox' id='" + region.regionName + "'><label for='" + region.regionName + "'>" + region.regionName + "</label>";
                 output += "</li>";
                 $('#bsc-region-parent-' + region.parentId).append(output);
@@ -472,6 +472,11 @@ var bandstatsChart = {
             genreList.push($(this).val());
         });
         var genreListString = genreList.join(",");
+        var regionList = [];
+        $('.bsc-region-option:checked').each(function() {
+            regionList.push($(this).val());
+        });
+        var regionListString = regionList.join(",");
         var url = bandstatsChart.deliDomain + '/save_prefs.php?name=genre-list&value=' + genreListString;
         $.ajax({
             url: url,
