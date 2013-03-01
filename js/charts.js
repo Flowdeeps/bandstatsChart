@@ -109,7 +109,7 @@ var bandstatsChart = {
             if (region.regionDesc == "parent") {
                 var output = "<li class='bsc-region-parent'>";
                 output += "<input class='bsc-region-option bsc-region-parent' value='" + region.regionName + "' type='checkbox' data-id='" + region.regionId + "'><label for='" + region.regionName + "'>" + region.regionName + "</label>";
-                output += "<ul class='bsc-region-parent-list' data-region='" + region.regionName + "' id='bsc-region-parent-" + region.regionId + "'></ul>";
+                output += "<ul class='bsc-region-child-list' data-region='" + region.regionName + "' id='bsc-region-parent-" + region.regionId + "'></ul>";
                 output += "</li>";
                 $('#bsc-region-parent-' + region.parentId).append(output);
             }
