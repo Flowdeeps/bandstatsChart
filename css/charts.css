@@ -270,16 +270,31 @@
         }
         .rating_error {
             color: #b40032;
-            font-family: UnitSlabWeb-Bold, Georgia, "Times New Roman", Times, serif; font-weight:normal;
+            font-family: UnitSlabWeb-Bold, Georgia, "Times New Roman", Times, serif;
+            font-weight: normal;
             }
 
 
 .expandable {
-
    }
+   + ul {
+    margin: 0;
+    }
   .header {
-    background: url('../images/icon-arrow-top-black-right.png') no-repeat transparent;
-   }
+    background: url('../images/icon-arrow-top-black-right.png') 5px center no-repeat transparent;
+    margin: 0;
+    text-indent: 18px;
+    line-height: 30px;
+    cursor: pointer;
+    }
+    .header a {
+      color: #333;
+      text-decoration: none;
+      display: block;
+      }
+    .header a:hover {
+      text-decoration: underline;
+      }
   .expanded {
     height: 100%;
    }
