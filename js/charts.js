@@ -157,7 +157,7 @@ var bandstatsChart = {
         bandstatsChart.showSelectedGenres();
         bandstatsChart.getChart();
         if (bandstatsChart.facebookId) {
-            bandstatsChart.saveUserPrefs();
+            bandstatsChart.saveGenrePrefs();
         }
     },
 
@@ -430,6 +430,14 @@ var bandstatsChart = {
                             bandstatsChart.addGenre(genre);
                         } 
                     }
+                    // apply regions
+                    if (response['region-list']) {
+                        var regionPrefs = response['region-list'].split(',');
+                        for (var g in regionPrefs) {
+                            var region = regionPrefs[g];
+                            bandstatsChart.addRegion(region);
+                        } 
+                    }
                     // apply ratings
                     if (response['band_ratings']) {
                         bandstatsChart.setUserRatings(response['band_ratings']);
@@ -465,18 +473,36 @@ var bandstatsChart = {
         }
     },
 
-    saveUserPrefs: function() {
+    saveRegionPrefs: function() {
+        // save the list to the server
+        var regionList = [];
+        $('.bsc-region-option:checked').each(function() {
+            regionList.push($(this).val());
+        });
+        var regionListString = regionList.join(",");
+
+        var url = bandstatsChart.deliDomain + '/save_prefs.php?name=region-list&value=' + regionListString;
+        $.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            success: function(response) {
+                bandstatsChart.log(response);
+            },
+            error: function(errorObj, textStatus, errorMsg) {
+                console.log(url + ' -- ' + JSON.stringify(errorMsg));
+            }
+        });
+    },
+
+    saveGenrePrefs: function() {
         // save the list to the server
         var genreList = [];
         $('.bsc-genre-option:checked').each(function() {
             genreList.push($(this).val());
         });
         var genreListString = genreList.join(",");
-        var regionList = [];
-        $('.bsc-region-option:checked').each(function() {
-            regionList.push($(this).val());
-        });
-        var regionListString = regionList.join(",");
+
         var url = bandstatsChart.deliDomain + '/save_prefs.php?name=genre-list&value=' + genreListString;
         $.ajax({
             url: url,
@@ -644,10 +670,10 @@ $(function(){
     $('.bsc-genre-option').live('click', function() {
         if (bandstatsChart.genres.indexOf($(this).val()) >= 0) {
             bandstatsChart.removeGenre($(this).val());
-            bandstatsChart.saveUserPrefs();
+            bandstatsChart.saveGenrePrefs();
         } else {
             bandstatsChart.addGenre($(this).val());
-            bandstatsChart.saveUserPrefs();
+            bandstatsChart.saveGenrePrefs();
         }
     });
 
@@ -702,7 +728,7 @@ $(function(){
                     bandstatsChart.removeRegion($(this).val());
                 });
             }
-            //bandstatsChart.saveUserPrefs();
+            bandstatsChart.saveRegionPrefs();
         } else {
             bandstatsChart.addRegion($(this).val());
             if ($(this).hasClass('bsc-region-parent')) {
@@ -713,7 +739,7 @@ $(function(){
                     bandstatsChart.addRegion($(this).val());
                 });
             }
-            //bandstatsChart.saveUserPrefs();
+            bandstatsChart.saveRegionPrefs();
         }
     });
 
