@@ -224,12 +224,15 @@
         width: 19px;
         height: 29px;
         -webkit-transition-duration: 0.3s;
-        -moz-transition-duration: 0.3s;
-        -o-transition-duration: 0.3s;
-        transition-duration: 0.3s;
+           -moz-transition-duration: 0.3s;
+             -o-transition-duration: 0.3s;
+            -ms-transition-duration: 0.3s;
+                transition-duration: 0.3s;
         -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        -o-border-radius: 5px;
+           -moz-border-radius: 5px;
+            -ms-border-radius: 5px;
+             -o-border-radius: 5px;
+                border-radius: 5px;
         }
         .stars:hover {
           margin: 3px -51px 0 0;
@@ -277,7 +280,32 @@
             font-family: UnitSlabWeb-Bold, Georgia, "Times New Roman", Times, serif;
             font-weight: normal;
             }
-
+/* only the first child h3 in the aside */
+aside > div > h3 {
+  margin: 0;
+  line-height: 30px;
+  }
+  aside > div > h3 a {
+    background: #999;
+    line-height: 20px;
+    margin: 3px 0 5px;
+    text-align: center;
+    color: #333;
+    display: block;
+    max-width: 150px;
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+        -ms-border-radius: 3px;
+         -o-border-radius: 3px;
+            border-radius: 3px;
+    border: solid 1px #666;
+    text-shadow: 0 1px 1px #fff;
+    box-shadow: 1px 1px 1px #000;
+    text-decoration: none;
+    }
+    aside > div > h3 a:hover {
+      text-decoration: underline;
+      }
 
 .expandable {
    }
@@ -286,8 +314,8 @@
     }
   .header {
     background: url('../images/icon-arrow-top-black-right.png') 5px center no-repeat transparent;
-    margin: 0;
     text-indent: 18px;
+    margin: 0;
     line-height: 30px;
     cursor: pointer;
     }
@@ -310,3 +338,19 @@
 .fb-login-buttonbutton {
   margin-left: 40px;
 }
+
+
+/* overlay stuff */
+#overlay {
+  display: none;
+  background: #fff;
+  opacity: .75;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  }
