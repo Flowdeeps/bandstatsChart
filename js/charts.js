@@ -88,6 +88,7 @@ var bandstatsChart = {
 
     addRegionsOptions: function(results) {
         $('#modal').empty();
+        $('#modal').append("<a href='#' id='close'>Close</a>");
         $('#modal').append("<ul id='bsc-region-grandparents-list'></ul>");
 
         // add grand parents
@@ -107,8 +108,8 @@ var bandstatsChart = {
             var region = results[r];
             if (region.regionDesc == "parent") {
                 var output = "<li class='bsc-region-parent'>";
-                output += "<input class='bsc-region-option' value='" + region.regionName + "' type='checkbox' id='" + region.regionName + "'><label for='" + region.regionName + "'>" + region.regionName + "</label>";
-                output += "<ul class='bsc-region-parent-list bsc-region-option' data-region='" + region.regionName + "' id='bsc-region-parent-" + region.regionId + "'></ul>";
+                output += "<input class='bsc-region-option bsc-region-parent' value='" + region.regionName + "' type='checkbox' data-id='" + region.regionId + "'><label for='" + region.regionName + "'>" + region.regionName + "</label>";
+                output += "<ul class='bsc-region-parent-list' data-region='" + region.regionName + "' id='bsc-region-parent-" + region.regionId + "'></ul>";
                 output += "</li>";
                 $('#bsc-region-parent-' + region.parentId).append(output);
             }
@@ -685,11 +686,40 @@ $(function(){
     $('.bsc-region-option').live('click', function() {
         if (bandstatsChart.regions.indexOf($(this).val()) >= 0) {
             bandstatsChart.removeRegion($(this).val());
+            if ($(this).hasClass('bsc-region-parent')) {
+                var regionId =  $(this).attr('data-id');
+                // check all children
+                $('#bsc-region-parent-' + regionId).find($('.bsc-region-option')).each(function() {
+                    $(this).attr('checked', false);
+                    bandstatsChart.removeRegion($(this).val());
+                });
+            }
             //bandstatsChart.saveUserPrefs();
         } else {
             bandstatsChart.addRegion($(this).val());
+            if ($(this).hasClass('bsc-region-parent')) {
+                var regionId =  $(this).attr('data-id');
+                // check all children
+                $('#bsc-region-parent-' + regionId).find($('.bsc-region-option')).each(function() {
+                    $(this).attr('checked', true);
+                    bandstatsChart.addRegion($(this).val());
+                });
+            }
             //bandstatsChart.saveUserPrefs();
         }
+    });
+
+    $('#select-regions').on('click', function() {
+        $('#overlay').fadeIn(function() {
+            $('#modal').fadeIn();
+            bandstatsChart.showSelectedRegions();
+        })
+    });
+
+    $('#close').live('click', function() {
+        $('#modal').fadeOut(function() {
+            $('#overlay').fadeOut();
+        });
     });
 
     /**
