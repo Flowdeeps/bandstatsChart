@@ -79,8 +79,8 @@ var bandstatsChart = {
     },
 
     addRegionsOptions: function(results) {
-        $('#bsc-region-options').empty();
-        $('#bsc-region-options').append("<ul id='bsc-region-grandparents-list'></ul>");
+        $('#modal').empty();
+        $('#modal').append("<ul id='bsc-region-grandparents-list'></ul>");
 
         // add grand parents
         for (var r in results) {
@@ -111,7 +111,7 @@ var bandstatsChart = {
             var region = results[r];
             if (region.regionDesc == "") {
                 var output = "<li class='bsc-region-parent'>";
-                output += "<h4>" + region.regionName + "</h4>";
+                output += "<input type='checkbox' id='" + region.regionName + "'><label for='" + region.regionName + "'>" + region.regionName + "</label>";
                 output += "</li>";
                 $('#bsc-region-parent-' + region.parentId).append(output);
             }
@@ -196,8 +196,8 @@ var bandstatsChart = {
             var genre = results[g];
             if (genre.parentId != genre.genreId) {
                 var output = "<li>";
-                output += "<input class='bsc-genre-link' type='checkbox' name='" + genre.genreName + "' value='" + genre.genreName + "' />";
-                output += genre.genreName + "</li>";
+                output += "<input class='bsc-genre-link' id='" + genre.genreName + "' type='checkbox' name='" + genre.genreName + "' value='" + genre.genreName + "' />";
+                output += "<label for='" + genre.genreName + "'>" + genre.genreName + "</label></li>";
                 $('#bsc-genre-children-' + genre.parentId).append(output);
             }
         }
