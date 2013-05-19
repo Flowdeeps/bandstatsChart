@@ -164,6 +164,7 @@ var bandstatsChart = {
         bandstatsChart.getChart();
         if (bandstatsChart.facebookId) {
             bandstatsChart.saveGenrePrefs();
+	    bandstatsChart.applyUserRatings();
         }
     },
 
@@ -531,6 +532,7 @@ var bandstatsChart = {
             dataType: 'json',
             success: function(response) {
                 bandstatsChart.log(response);
+		bandstatsChart.userRatings[bandId] = ratingScore;
                 callback(response);
             },
             error: function(errorObj, textStatus, errorMsg) {
