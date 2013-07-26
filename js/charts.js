@@ -24,6 +24,7 @@ var bandstatsChart = {
     page: 1,
     format: 'full', 
     defaultChartType: 'bandScore',
+    showRegion: 'ALL REGIONS',
 
     facebookId: '',
     cache: {},
@@ -43,10 +44,6 @@ var bandstatsChart = {
 
     setLimit: function(limit) {
         bandstatsChart.limi = limit;
-    },
-
-    setRegion: function(region) {
-        bandstatsChart.regions = [region];
     },
 
     setBandIds: function(bandIds) {
@@ -79,29 +76,42 @@ var bandstatsChart = {
         var url = bandstatsChart.deliDomain + '/regions.php';
 
         bandstatsChart._send(url, [], 'jsonp', function(results) {
-            bandstatsChart.addRegionsOptions(results);
+	    bandstatsChart.allRegions = results;
+	    // add default all region option
+	    $('#bsc-region-grandparents-select').append("<option value='ALL REGIONS'>ALL REGIONS</option>");
+	    // add all region grandparent options
+            for (var r in results) {
+                var region = results[r];
+
+                if (region.regionDesc == "grandparent") {
+		    $('#bsc-region-grandparents-select').append("<option value='" + region.regionName + "'>" + region.regionName + "</option>");
+		}
+	    }
+            bandstatsChart.showRegionsOptions(results);
             if (callback) {
                 callback(results);
             }
         });
     },
 
-    addRegionsOptions: function(results) {
-        $('#modal').empty();
-        $('#modal').append("<a href='#' id='close'>Close</a>");
-        $('#modal').append("<ul id='bsc-region-grandparents-list'></ul>");
-
+    showRegionsOptions: function() {
+	var results = bandstatsChart.allRegions;
         var realParents = [];
-        // add grand parents
+	var showRegionId = null;
+
+	$('.bsc-region-grandparent').remove();
+	$('.bsc-region-parent').remove();
+	$('.bsc-region-child').remove();
+
         for (var r in results) {
             var region = results[r];
-            if (region.regionDesc == "grandparent") {
-                var output = "<li class='bsc-region-grandparent'>";
-                output += "<h4>" + region.regionName + "</h4>";
-                output += "<ul class='bsc-region-grandparent-list' id='bsc-region-parent-" + region.regionId + "'></ul>"; 
-                output += "</li>";
-                $('#bsc-region-grandparents-list').append(output);
-            }
+	    if (region.regionName == bandstatsChart.showRegion) {
+                    var output = "<li class='bsc-region-grandparent'>";
+                    output += "<ul class='bsc-region-grandparent-list' id='bsc-region-parent-" + region.regionId + "'></ul>"; 
+                    output += "</li>";
+                    $('#bsc-region-tree').append(output);
+		    showRegionId = region.regionId;
+	    }
             if (region.parentId) {
                 realParents.push(region.parentId);
             }
@@ -110,12 +120,17 @@ var bandstatsChart = {
         // add parents 
         for (var r in results) {
             var region = results[r];
-            if (region.regionDesc == "parent") {
+            if ((region.regionDesc == "parent") && 
+		((region.regionName == bandstatsChart.showRegion) ||
+		 (region.parentId == showRegionId))) {
+
                 var output = "<li class='bsc-region-parent'>";
                 output += "<input id='" + region.regionName + "' class='bsc-region-option bsc-region-parent' value='" + region.regionName + "' type='checkbox' data-id='" + region.regionId + "'><label for='" + region.regionName + "'>" + region.regionName + "</label>";
-                if (realParents.indexOf(region.regionId) > 0) {
+                if (realParents.indexOf(region.regionId) >= 0) {
                     output += "<ul class='bsc-region-child-list' data-region='" + region.regionName + "' id='bsc-region-parent-" + region.regionId + "'></ul>";
-                }
+		} else {
+			console.log(region.regionName, realParents.indexOf(region.regionId));
+		}
                 output += "</li>";
                 $('#bsc-region-parent-' + region.parentId).append(output);
             }
@@ -146,6 +161,16 @@ var bandstatsChart = {
             var output = "<li><a href='#'>" + region + "</a></li>";
             $('#bsc-region-list').append(output);
             $("input:checkbox[value='" + region + "']").attr("checked", true);
+        }
+    },
+
+    resetRegions: function() {
+	bandstatsChart.regions = [];
+        bandstatsChart.showSelectedRegions();
+        bandstatsChart.getChart();
+        if (bandstatsChart.facebookId) {
+            bandstatsChart.saveRegionPrefs();
+	    bandstatsChart.applyUserRatings();
         }
     },
 
@@ -374,6 +399,22 @@ var bandstatsChart = {
 
     hideLoading: function() {
 
+    },
+
+    showGenreTree: function() {
+        $('#bsc-genre-tree').show();
+    },
+
+    hideGenreTree: function() {
+        $('#bsc-genre-tree').hide();
+    },
+
+    showRegionTree: function() {
+        $('#bsc-region-tree').show();
+    },
+
+    hideRegionTree: function() {
+        $('#bsc-region-tree').hide();
     },
 
     log: function(msg) {
@@ -642,11 +683,6 @@ var bandstatsChart = {
 $(function(){
 
     /* event handlers */
-    $('#bsc-scene-select').change(function() {
-        bandstatsChart.setRegion($(this).val());
-        bandstatsChart.getChart();
-    });
-
     $('#bsc-orderby-select').change(function() {
         bandstatsChart.setChartType($(this).val());
         bandstatsChart.getChart();
@@ -725,6 +761,11 @@ $(function(){
         }
     });
 
+    $('#bsc-region-grandparents-select').change(function() {
+	bandstatsChart.showRegion = $(this).val();
+	bandstatsChart.showRegionsOptions();
+    });
+
     $('.bsc-region-option').live('click', function() {
         if (bandstatsChart.regions.indexOf($(this).val()) >= 0) {
             bandstatsChart.removeRegion($(this).val());
@@ -756,11 +797,14 @@ $(function(){
     });
 
     $('#select-regions').on('click', function() {
-        $('#overlay').fadeIn(function() {
-            $('#modal').fadeIn();
-            bandstatsChart.showSelectedRegions();
-            return false;
-        })
+	if (!$('#bsc-region-tree').is(":visible")) {
+            bandstatsChart.showRegionTree();
+            bandstatsChart.hideGenreTree();
+	}
+    });
+
+    $('#bsc-reset-regions').on('click', function() {
+	bandstatsChart.resetRegions();
     });
 
     $('#close').live('click', function() {
@@ -773,7 +817,6 @@ $(function(){
     /**
      * 5 star rating functions
      */
-
     $('.ratings_stars').live({ 
         mouseenter:
             function() {
@@ -823,4 +866,12 @@ $(function(){
         }
         return false;
     });
+
+    $('#select-genres').live('click', function() {
+	if (!$('#bsc-genre-tree').is(":visible")) {
+	  bandstatsChart.showGenreTree();
+	  bandstatsChart.hideRegionTree();
+	}
+    });
+
 });
