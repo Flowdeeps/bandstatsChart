@@ -129,7 +129,7 @@ var bandstatsChart = {
                 if (realParents.indexOf(region.regionId) >= 0) {
                     output += "<ul class='bsc-region-child-list' data-region='" + region.regionName + "' id='bsc-region-parent-" + region.regionId + "'></ul>";
 		} else {
-			console.log(region.regionName, realParents.indexOf(region.regionId));
+	 		console.log(region.regionName, realParents.indexOf(region.regionId));
 		}
                 output += "</li>";
                 $('#bsc-region-parent-' + region.parentId).append(output);
@@ -345,7 +345,7 @@ var bandstatsChart = {
                 if (result.bandFacebookId) {
                     output += "<li class='facebook' data-href='http://www.facebook.com/" + result.bandFacebookId + "'>Band Facebook Page</li>";
                 }
-                output += "<li class='listen' data-band-name='" + result.bandName + "'>Listen</li></ul></li>";
+                output += "<li class='listen' data-band-name='" + result.bandName + "' data-lastfm-listeners='" + result.lastFMListeners + "'>Listen</li></ul></li>";
                 
                 $('#bsc-chart').append(output);
             }
@@ -722,7 +722,11 @@ $(function(){
     });
 
     $('.listen').live('click', function() {
-        var url = "http://www.thedelimagazine.com/media_player/media_player.html?band_name=" + $(this).attr('data-band-name');
+	if (Math.abs($(this).attr('data-lastfm-listeners')) < 50000) {
+            var url = "http://www.thedelimagazine.com/media_player/media_player.html?band_name=" + $(this).attr('data-band-name') + "&display_audio=true";
+	} else {
+            var url = "http://www.thedelimagazine.com/media_player/media_player.html?band_name=" + $(this).attr('data-band-name');
+	}
         window.open(url, 'deliPlayer', 'width=300,height=800,menubar=0,location=0,titlebar=0,toolbar=0,status=0,directories=0, ');
     });
 
